@@ -1,0 +1,29 @@
+//A FAIRE:
+-Collision fonds et corde
+-Cassage de bloc(sacha)??
+-AI des ennemies
+-Changement de niveau + Effet de son(caio)
+-Mode coop[sur le meme PC](caio)
+-Score DB(sacha)
+-Serveur
+-Lan Coop
+-Menu Gui(sacha)
+-Mode Versus
+
+
+//BUGS
+-Resoudre le bug ou le personnage essaie de sortir de la map et il y a une errreur java error index out of bound
+-Resoudre bug ou la musique ne se reinitialize pas apres avoir "Pauser" le jeu
+
+
+//Problèmes generaux
+-hitbox est trop genereuse
+-Changer la typo
+
+
+//REFACTORIZATION
+-Refactoriser classe Player et Ennemy(NPC)
+
+-Refactoriser code gravite + collision
+my local changes 
+changes from the remote repository

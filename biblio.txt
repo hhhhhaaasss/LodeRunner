@@ -1,0 +1,15 @@
+How to Make a 2d Game in Java Playlist:
+https://www.youtube.com/playlist?list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq
+
+PiSKEL for the pixel art char
+
+Resolving sound Volume issue:
+https://stackoverflow.com/questions/953598/audio-volume-control-increase-or-decrease-in-java
+
+Sound Effects website:
+-Coins (from Danganronpa THH):
+https://sounds.spriters-resource.com/pc_computer/danganronpatriggerhappyhavoc/asset/414149/
+
+Music:
+-Turn up the heat (from Danganronpa THH): 
+https://downloads.khinsider.com/game-soundtracks/album/danganronpa-trigger-happy-havoc-original-soundtrack/2-10%2520Argument%2520%2528Turn%2520Up%2520the%2520Heat%2529.mp3
