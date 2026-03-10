@@ -15,3 +15,9 @@ Music:
 https://downloads.khinsider.com/game-soundtracks/album/danganronpa-trigger-happy-havoc-original-soundtrack/2-10%2520Argument%2520%2528Turn%2520Up%2520the%2520Heat%2529.mp3
 
 A*(Star) Search Algo for ai
+
+Fixing display bug
+https://stackoverflow.com/questions/15716473/exception-in-thread-awt-eventqueue-0-java-awt-illegalcomponentstateexception
+
+Fixing setIcon bug
+https://www.answeroverflow.com/m/1354169299752849699

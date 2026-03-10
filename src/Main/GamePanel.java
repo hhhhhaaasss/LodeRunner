@@ -73,9 +73,8 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int titleState = 0;
 	public final int playState = 1;
 	public final int pauseState = 2;
-	public final int dialogueState = 3;
-	public final int optionsState = 4;
-	public final int gameOverState = 5;
+	public final int gameOverState = 3;
+	public final int settingsState = 4;
 	
 	
 	
@@ -91,8 +90,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void setupGame() {
 		aSetter.setObject();
 		aSetter.setNPC();
-		playMusic(0);
-		stopMusic();
+		playMusic(2);
 		gameState = titleState;
 		
 		//FullScreen settings
@@ -179,9 +177,6 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 				
 			}
-		}
-		if(gameState == pauseState) {
-			music.stop();
 		}
 	}
 	

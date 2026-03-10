@@ -23,7 +23,6 @@ public class KeyHandler implements KeyListener{
 		
 		//Title State
 		if(gp.gameState == gp.titleState) {
-			
 			if(gp.ui.titleScreenState == 0) {
 				if(code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP){
 					gp.ui.commandNum--;
@@ -48,6 +47,9 @@ public class KeyHandler implements KeyListener{
 					if(gp.ui.commandNum == 2) {
 						//add later
 					}
+					if(gp.ui.commandNum == 3) {
+						gp.gameState = gp.settingsState;
+					}
 					
 					if(gp.ui.commandNum == 4) {
 						System.exit(0);
@@ -58,13 +60,13 @@ public class KeyHandler implements KeyListener{
 				if(code == KeyEvent.VK_ENTER) {
 					gp.gameState = gp.playState;
 					gp.ui.titleScreenState = 0;
+					gp.stopMusic();
 					gp.playMusic(0);
 
 			}
 		}
 	}
 		
-		//Play State
 		if(gp.gameState == gp.playState) {
 		if(code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP){
 			upPressed = true;
@@ -78,7 +80,7 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_D || code == KeyEvent.VK_E || code == KeyEvent.VK_RIGHT){
 			rightPressed = true;
 		}
-		if(code == KeyEvent.VK_ESCAPE){
+		if(code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_P){
 			if(gp.gameState == gp.playState) {
 				gp.gameState = gp.pauseState;
 			}
@@ -98,29 +100,10 @@ public class KeyHandler implements KeyListener{
 			}
 			
 		}
-		
-
-		if(code == KeyEvent.VK_P) {
-			gp.gameState = gp.optionsState;
-		}
-		
 	}
-		//Pause State
-		else if(gp.gameState == gp.pauseState) {
-			if(code == KeyEvent.VK_ESCAPE){
-				gp.gameState = gp.playState;
-			}
-		}
-		
-		//Dialogue State
-		else if(gp.gameState == gp.dialogueState) {
-			if(code == KeyEvent.VK_ENTER) {
-				gp.gameState = gp.playState;
-			}
-		}
 		
 		//Option State
-		else if(gp.gameState == gp.optionsState) {
+		else if(gp.gameState == gp.pauseState) {
 			optionsState(code);
 		}
 		
@@ -129,11 +112,20 @@ public class KeyHandler implements KeyListener{
 			gameOverState(code);
 		}
 		
+		//Settings State
+		else if(gp.gameState == gp.settingsState) {
+			settingsState(code);
+		}
+		
 }
+	
+	public void settingsState(int code) {
+
+	}
 
 	public void optionsState(int code) {
 		
-		if(code == KeyEvent.VK_P) {
+		if(code == KeyEvent.VK_ESCAPE ||code == KeyEvent.VK_P) {
 			gp.gameState = gp.playState;
 		}
 		if(code == KeyEvent.VK_ENTER) {
@@ -203,6 +195,7 @@ public class KeyHandler implements KeyListener{
 			}
 			else if(gp.ui.commandNum == 1) {
 				gp.gameState = gp.titleState;
+				gp.playMusic(2);
 				gp.retry();
 			}
 		}

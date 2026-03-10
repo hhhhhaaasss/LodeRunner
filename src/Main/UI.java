@@ -64,24 +64,19 @@ public class UI {
 		if(gp.gameState == gp.playState) {
 			drawUI();
 		}
+		
 		//Pause State
 		if(gp.gameState == gp.pauseState) {
-			drawPauseScreen();
-		}
-		//Dialogue State
-		if(gp.gameState == gp.dialogueState) {
-			drawDialogueScreen();
-			
-		}
-		
-		//Options State
-		if(gp.gameState == gp.optionsState) {
 			drawOptionsScreen();
 		}
 		
 		//Game Over State
 		if(gp.gameState == gp.gameOverState) {
 			drawGameOverScreen();
+		}
+		
+		if(gp.gameState == gp.settingsState) {
+			drawSettingsScreen();
 		}
 	}
 	
@@ -179,36 +174,7 @@ public class UI {
 		}
 	}
 	
-	public void drawPauseScreen() {
 		
-		String text = "PAUSED";
-		int x = getXforCenteredText(text);
-		int y = gp.screenHeight/2;
-		
-		g2.drawString(text, x, y);
-	}
-	
-	public void drawDialogueScreen() {
-		
-		//WINDOW
-		int x = gp.tileSize + 70;
-		int y = gp.tileSize * 2;
-		int width = gp.screenWidth - (gp.tileSize * 4);
-		int height = gp.tileSize * 10;
-		
-		drawSubWindow(x,y,width,height);
-		
-		g2.setFont(g2.getFont().deriveFont(Font.PLAIN,32F));
-		x += gp.tileSize;
-		y += gp.tileSize;
-		
-		for(String line : currentDialogue.split("\n")) {
-			g2.drawString(line, x, y);
-			y += 40;
-		}
-		
-	}
-	
 	public void drawGameOverScreen() {
 		
 		g2.setColor(new Color(0,0,0,150));
@@ -250,13 +216,15 @@ public class UI {
 		
 	}
 	
+	
 	public void drawOptionsScreen() {
+		
 		g2.setColor(Color.white);
 		g2.setFont(g2.getFont().deriveFont(32F));
 		
 		//Sub Window
 		int frameX = gp.tileSize*9;
-		int frameY = gp.tileSize;
+		int frameY = gp.tileSize * 2;
 		int frameWidth = gp.tileSize * 8;
 		int frameHeight = gp.tileSize*10;
 		
@@ -275,7 +243,7 @@ public class UI {
 		int textY;
 		
 		//TITLE
-		String text = "Options";
+		String text = "Pause";
 		textX = getXforCenteredText(text);
 		textY = frameY + gp.tileSize;
 		g2.drawString(text, textX, textY);
@@ -385,9 +353,9 @@ public class UI {
 	public void options_endGameConfirmation(int frameX, int frameY){
 		
 		int textX = frameX + gp.tileSize;
-		int textY = frameY + gp.tileSize *3;
+		int textY = frameY + gp.tileSize * 2;
 		
-		currentDialogue = "Quit the game and \nreturn to the title screen?";
+		currentDialogue = "Quit the game \nand return to the \ntitle screen?";
 		
 		for(String line : currentDialogue.split("\n")) {
 			g2.drawString(line, textX, textY);
@@ -397,19 +365,21 @@ public class UI {
 		//Yes
 		String text = "Yes";
 		textX = getXforCenteredText(text);
-		textY += gp.tileSize* 3;
+		textY += gp.tileSize* 2;
 		g2.drawString(text, textX, textY);
 		if(commandNum == 0) {
 			g2.drawString(">", textX-25, textY);
 			if(gp.keyH.enterPressed == true) {
 				subState = 0;
 				gp.gameState = gp.titleState;
+				gp.stopMusic();
+				gp.playMusic(2);
 			}
 		}
 		//No
 		 text = "No";
 		 textX = getXforCenteredText(text);
-			textY += gp.tileSize* 3;
+			textY += gp.tileSize;
 			g2.drawString(text, textX, textY);
 			if(commandNum == 1) {
 				g2.drawString(">", textX-25, textY);
@@ -420,10 +390,18 @@ public class UI {
 			}
 	}
 	
-	
+	public void drawSettingsScreen() {
+		//Background Color
+		g2.setColor(new Color(0,0,0));
+		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+		
+		
+	}
+
 	public void drawSubWindow(int x, int y, int width, int height) {
 		
-		Color c = new Color(0,0,0,150);
+		Color c = new Color(0,0,0,230);
 		g2.setColor(c);
 		g2.fillRoundRect(x, y, width, height, 35, 35);
 		

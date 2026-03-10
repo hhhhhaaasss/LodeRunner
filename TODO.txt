@@ -1,5 +1,4 @@
 //A FAIRE:
--Creation corde
 
 -Collision corde
 
@@ -30,13 +29,7 @@
 //BUGS
 -Resoudre le bug ou le personnage essaie de sortir de la map et il y a une errreur java error index out of bound
 
--Resoudre bug ou la musique ne se reinitialize pas apres avoir "Pauser" le jeu
-
--Probleme dans le menu
-
--Probleme dans le window.setUndecorated pour l'option plein ecran
-
--Resoudre bug ou le personnage est trop lent
+-Resoudre bug ou le personnage est trop lent (c'est quand on met le jeu sur fond d'ecran, c'est par rapport a la variable scale)
 
 
 //PROBLEMES GENERAUX
@@ -49,11 +42,12 @@
 
 
 //AJOUT
--Ajouter une comande pour appuier sur le click gauche de la sourri pour avancer le dialogue
 
 -Trouve une typo et l'ajouter dans le jeu
 
 -Ajouter une fonction ou la fleche du menu clignote
+
+-Faire menu Settings
 
 
 
