@@ -1,30 +1,72 @@
 //A FAIRE:
--Collision fonds et corde
--Cassage de bloc(sacha)??
+-Creation corde
+
+-Collision corde
+
 -AI des ennemies
--Changement de niveau + Effet de son(caio)
--Mode coop[sur le meme PC](caio)
--Score DB(sacha)
--Serveur
--Lan Coop
--Menu Gui(sacha)
+
+-Cassage de bloc
+
+-Changement de niveau
+
+-Effet de son
+
+-Icone de debut
+
+-Mode coop[sur le meme PC]
+
 -Mode Versus
+
+-Score DB
+
+-Serveur
+
+-Lan Coop
+
+-Faire un .exe du programme
+
 
 
 //BUGS
 -Resoudre le bug ou le personnage essaie de sortir de la map et il y a une errreur java error index out of bound
+
 -Resoudre bug ou la musique ne se reinitialize pas apres avoir "Pauser" le jeu
 
+-Probleme dans le menu
 
-//Problèmes generaux
--hitbox est trop genereuse
--Changer la typo
+-Probleme dans le window.setUndecorated pour l'option plein ecran
+
+-Resoudre bug ou le personnage est trop lent
+
+
+//PROBLEMES GENERAUX
+-hitbox est trop genereuse pour la collision du personnage vers le sol
+
+-Changer les index des objets/npc
+
+-Changer le String dialogue de la classe Entite, NPC_BEAR et Player (Ecrit "TEMPORARY")
+
+
+
+//AJOUT
+-Ajouter une comande pour appuier sur le click gauche de la sourri pour avancer le dialogue
+
+-Trouve une typo et l'ajouter dans le jeu
+
+-Ajouter une fonction ou la fleche du menu clignote
+
 
 
 //REFACTORIZATION
 -Refactoriser classe Player et Ennemy(NPC)
 
 -Refactoriser code gravite + collision
-my local changes 
-changes from the remote repository
-A
+
+-Refactoriser classe GamePanel
+
+-Refactoriser classe UI
+
+
+
+//RAPPORT
+-Expliquer static dans main

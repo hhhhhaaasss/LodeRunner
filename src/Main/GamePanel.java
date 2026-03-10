@@ -1,12 +1,19 @@
 package Main;
 
+import entity.Entity;
 //Importing the java awt for the UI
 import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JPanel;
+
+import ai.PathFinder;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -24,6 +31,17 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int screenWidth = tileSize * maxScreenCol; // 1248 pixels
 	public final int screenHeight = tileSize * maxScreenRow; // 720 pixels
 	
+	//World Settings
+	public final int maxMap = 10;
+	public int currentMap = 0;
+	
+	//FullScreen
+	int screenWidth2 = screenWidth;
+	int screenHeight2 = screenHeight;
+	BufferedImage tempScreen;
+	Graphics2D g2;
+	public boolean fullScreenOn = false;
+	
 	int FPS = 60;
 	
 	
@@ -32,11 +50,12 @@ public class GamePanel extends JPanel implements Runnable{
 	Thread gameThread;
 	
 	//SYSTEM
-	TileManager tileM = new TileManager(this);
+	public TileManager tileM = new TileManager(this);
 	Sounds music = new Sounds();
 	Sounds se = new Sounds();
 	public UI ui = new UI(this);
-	
+	Config config = new Config(this);
+	public PathFinder pFinder = new PathFinder(this);
 	
 	//COLLISION AND GRAVITY
 	public CollisionChecker cChecker = new CollisionChecker(this); 
@@ -44,14 +63,19 @@ public class GamePanel extends JPanel implements Runnable{
 	public Gravity gravity = new Gravity(this);
 	
 	//ENTITY AND OBJ
-	Player player = new Player(this, keyH);
-	public SuperObject obj[] = new SuperObject[10]; //prepare 10 slots for objects
+	public Player player = new Player(this, keyH);
+	public SuperObject obj[][] = new SuperObject[maxMap][10]; //prepare 10 slots for objects
+	public Entity npc[][] = new Entity[maxMap][10];
+	
 
 	//GAME STATE
 	public int gameState;
+	public final int titleState = 0;
 	public final int playState = 1;
 	public final int pauseState = 2;
-	
+	public final int dialogueState = 3;
+	public final int optionsState = 4;
+	public final int gameOverState = 5;
 	
 	
 	
@@ -66,10 +90,42 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void setupGame() {
 		aSetter.setObject();
+		aSetter.setNPC();
 		playMusic(0);
-		gameState = playState;
+		stopMusic();
+		gameState = titleState;
+		
+		//FullScreen settings
+		tempScreen = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_ARGB);
+		g2 = (Graphics2D) tempScreen.getGraphics();//Everything this g2 draw will be recorded here
+		
+		if(fullScreenOn == true) {
+			setFullScreen();
+		}
+		
 	}
 	
+	public void retry() {
+		player.setDefaultPositions();
+		player.restoreLife();
+		player.score = 0;
+		aSetter.setObject();
+		aSetter.setNPC();
+		
+	}
+	
+	
+	public void setFullScreen() {
+		
+		//Get Local Screen Device
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice gd = ge.getDefaultScreenDevice();
+		gd.setFullScreenWindow(Main.window);
+		
+		//Get FullScreen Width and Height
+		screenWidth2 = Main.window.getWidth();
+		screenHeight2 = Main.window.getHeight();
+	}
 	public void startGameThread() {
 		gameThread = new Thread(this);
 		gameThread.start();
@@ -89,7 +145,8 @@ public class GamePanel extends JPanel implements Runnable{
 			//Update Info such as character pos
 			update();
 			//Draw the screen with updated info
-			repaint();//Calls the paintComponent method
+			drawToTempScreen();// draw everything to the buffered image
+			drawToScreen();// draw the buffered image to the screen
 			
 		//This try catch is here to make sure our character does not disappear on screen and has time to run
 			try {
@@ -112,41 +169,90 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void update(){
 		
-		if(gameState == playState) {player.update();}
+		if(gameState == playState) {
+			//Player
+			player.update();
+			//NPC
+			for(int i = 0; i< npc[1].length; i++) {
+				if(npc[currentMap][i] != null) {
+					npc[currentMap][i].update();
+				}
+				
+			}
+		}
 		if(gameState == pauseState) {
 			music.stop();
 		}
 	}
 	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D)g;
-		
-		
+	public void drawToTempScreen() {
+		//Debug
+		long drawStart = 0;
+		if(keyH.checkDebugText == true) {
+			drawStart = System.nanoTime();		
+			}
+				
+		//TITLE SCREEN
+		if(gameState == titleState) {
+			ui.draw(g2);
+		}
+				
+		// OTHERS
+		else {
+				
 		//Tile
 		tileM.draw(g2);
-		
+				
 		//Object
-		for(int i = 0; i < obj.length;i++) {
-			if(obj[i] !=null) {
-				obj[i].draw(g2, this);
+		for(int i = 0; i < obj[1].length;i++) {
+				if(obj[currentMap][i] !=null) {
+					obj[currentMap][i].draw(g2, this);
+				}
+			}
+					
+			//NPC
+			for(int i = 0; i < npc[1].length;i++) {
+				if(npc[currentMap][i] != null) {
+					npc[currentMap][i].draw(g2);
+				}
+			}
+					
+			//Player
+			player.draw(g2);
+
+			//UI
+			ui.draw(g2);
+					
+			//DEBUG
+			if(keyH.checkDebugText == true) {
+				long drawEnd = System.nanoTime();
+				long passed = drawEnd - drawStart;
+						
+				g2.setColor(Color.black);
+				int x = 10;
+				int y = 400;
+				int lineHeight = 30;
+						
+				g2.drawString("WorldX" + player.x, x, y); y+= lineHeight;
+				g2.drawString("WorldY" + player.y, x, y); y+= lineHeight;
+				g2.drawString("Col" + (player.x + player.solidArea.x)/tileSize, x,y); y+= lineHeight;
+				g2.drawString("Row" + (player.y + player.solidArea.y)/tileSize, x,y); y+= lineHeight;
+				g2.drawString("Draw Time: " +  passed, x,y);
 			}
 		}
-		
-		//Player
-		player.draw(g2);
-
-		//UI
-		ui.draw(g2);
-		
-		g2.dispose();//Dispose of this graphics context and release any system resources that it is using
-		
 	}
+	
+
+	public void drawToScreen() {
+		
+		Graphics g = getGraphics();
+		g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+		g.dispose();
+		}
 	
 	public void playMusic(int i) {
 		music.setFile(i);
 		music.play();
-		music.volume(-10.0f);
 		music.loop();
 	}
 	
@@ -156,7 +262,6 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void playSE(int i) {
 		se.setFile(i);
-		se.volume(-10.0f);
 		se.play();
 		
 	}

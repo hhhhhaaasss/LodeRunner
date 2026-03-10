@@ -1,5 +1,6 @@
 package Main;
 
+import entity.NPC_Bear;
 import object.MagnifyingGlass;
 
 public class AssetSetter {
@@ -11,17 +12,30 @@ public class AssetSetter {
 	
 	public void setObject() {
 		
-		gp.obj[0] = new MagnifyingGlass();
-		gp.obj[0].worldX = 13 * gp.tileSize;
-		gp.obj[0].worldY = 12 * gp.tileSize;
 		
-		gp.obj[1] = new MagnifyingGlass();
-		gp.obj[1].worldX = 20 * gp.tileSize;
-		gp.obj[1].worldY = 1 * gp.tileSize;
+		//First [] is mapNum
+		//Second [] is Object Num
+ 		
+		gp.obj[0][0] = new MagnifyingGlass();
+		gp.obj[0][0].worldX = 13 * gp.tileSize;
+		gp.obj[0][0].worldY = 12 * gp.tileSize;
+		
+		gp.obj[0][1] = new MagnifyingGlass();
+		gp.obj[0][1].worldX = 20 * gp.tileSize;
+		gp.obj[0][1].worldY = 1 * gp.tileSize;
 
-		gp.obj[2] = new MagnifyingGlass();
-		gp.obj[2].worldX = 4 * gp.tileSize;
-		gp.obj[2].worldY = 1 * gp.tileSize;
+		gp.obj[0][2] = new MagnifyingGlass();
+		gp.obj[0][2].worldX = 4 * gp.tileSize;
+		gp.obj[0][2].worldY = 1 * gp.tileSize;
 
+	}
+	
+	public void setNPC() {
+		
+		int mapNum = 0;
+		
+		gp.npc[0][0] = new NPC_Bear(gp);
+		gp.npc[0][0].x = 200;
+		gp.npc[0][0].y = 400;
 	}
 }

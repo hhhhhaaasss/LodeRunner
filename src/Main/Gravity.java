@@ -23,8 +23,8 @@ public class Gravity {
 		int tileNum1, tileNum2;
 		
 		entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;
-		tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
-		tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
+		tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
+		tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
 		
 		if(gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0){
 			entity.y += entity.speed;

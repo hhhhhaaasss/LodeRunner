@@ -11,16 +11,17 @@ public class TileManager {
 	
 	GamePanel gp;
 	public Tile[] tile;
-	public int mapTileNum[][]; //Using text file as maps
+	public int mapTileNum[][][]; //Using text file as maps
 	
 	public TileManager(GamePanel gp) {
 		
 		this.gp = gp;
 		tile = new Tile[10];
-		mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+		mapTileNum = new int[gp.maxMap][gp.maxScreenCol][gp.maxScreenRow];
 		
 		getTileImage();
-		loadMap("/maps/test.txt");
+		loadMap("/maps/test.txt",0);
+		//loadMap("/maps/test.txt",1);
 	}
 	
 	public void getTileImage() {
@@ -38,6 +39,10 @@ public class TileManager {
 			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stairs_1.png"));
 			tile[2].collision = 2;
 			
+			tile[3] = new Tile();
+			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rope_1.png"));
+			tile[3].collision = 3;
+			
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -47,7 +52,7 @@ public class TileManager {
 	//Scan our map file and create the map from a txt file
 	
 	//TODO THIS METHOD LAGS THE GAME
-	public void loadMap(String filePath) {
+	public void loadMap(String filePath, int map) {
 		try {
 			InputStream is = getClass().getResourceAsStream(filePath);
 			//Read the content of the text file
@@ -66,7 +71,7 @@ public class TileManager {
 				
 					int num = Integer.parseInt(numbers[col]); // Use col as an index for numbers array
 				
-					mapTileNum[col][row] = num;
+					mapTileNum[map][col][row] = num;
 					col++;
 				}
 				if(col == gp.maxScreenCol) {
@@ -91,7 +96,7 @@ public class TileManager {
 
 		while(col < gp.maxScreenCol && row < gp.maxScreenRow) {
 			
-			int tileNum = mapTileNum[col][row];
+			int tileNum = mapTileNum[gp.currentMap][col][row];
 			
 			g2.drawImage(tile[tileNum].image, worldX, worldY, gp.tileSize, gp.tileSize, null);
 			col++;

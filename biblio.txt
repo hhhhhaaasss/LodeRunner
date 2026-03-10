@@ -13,3 +13,5 @@ https://sounds.spriters-resource.com/pc_computer/danganronpatriggerhappyhavoc/as
 Music:
 -Turn up the heat (from Danganronpa THH): 
 https://downloads.khinsider.com/game-soundtracks/album/danganronpa-trigger-happy-havoc-original-soundtrack/2-10%2520Argument%2520%2528Turn%2520Up%2520the%2520Heat%2529.mp3
+
+A*(Star) Search Algo for ai

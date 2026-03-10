@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -13,6 +14,8 @@ public class NPC_Bear  extends Entity{
 		
 		direction = "down";
 		speed = 1;
+		
+		getNPCImage();
 	}
 	
 	public void getNPCImage() {
@@ -33,5 +36,66 @@ public class NPC_Bear  extends Entity{
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+		
+		
 	}
+	
+	//TEMPORARY
+	public void setDialogue() {
+		
+		dialogues[0] = "Among us ";
+		dialogues[1] = "Lorem Ipsum ffijdsofjdio\nsfjfids";
+		dialogues[2] = "Tutorial ";
+		dialogues[3] = "SUS ";
+		
+		
+	}
+	
+	public void setAction() {
+		
+		if(onPath == true) {
+			
+			int goalCol = (gp.player.x + gp.player.solidArea.x)/gp.tileSize;
+			int goalRow = (gp.player.y + gp.player.solidArea.y)/gp.tileSize;
+			
+			searchPath(goalCol,goalRow);
+		}
+		//Remove this else later
+		else {
+			actionLockCounter ++;
+			
+			if(actionLockCounter == 120) {
+				
+			
+				Random random = new Random();
+				int i = random.nextInt(100)+1;
+			
+				if(i <= 25) {
+				direction = "up";
+				}
+			
+				else if(i > 25 && i <= 50) {
+					direction = "down";
+				}
+			
+				else if(i > 50 && i<= 75) {
+					direction = "left";
+				}
+				else {
+					direction = "right";
+				}
+				
+				actionLockCounter = 0;
+			}
+		}
+		
+	}
+	
+	//TEMPORARY
+	public void speak() {
+		onPath = true;
+	}
+	
+	
+	
 }

@@ -16,6 +16,7 @@ public class Player extends Entity{
 
 	KeyHandler keyH;
 	public int score = 0;
+	public int life = 3;
 	
 	public Player(GamePanel gp, KeyHandler keyH) {
 		
@@ -42,6 +43,15 @@ public class Player extends Entity{
 		speed = 2;
 		direction = "down";
 	}
+	public void setDefaultPositions() {
+		x = 500;
+		y = 470;
+		direction = "down";
+	}
+	public void restoreLife() {
+		life = 3;
+	}
+	
 	
 	public void getPlayerImage() {
 		try {
@@ -79,6 +89,10 @@ public class Player extends Entity{
 			int objIndex = gp.cChecker.checkObject(this, true);
 			pickUpObject(objIndex);
 			
+			//Check NPC Collision
+			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
+			
 			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == 0) {
@@ -91,6 +105,14 @@ public class Player extends Entity{
 				switch(direction) {
 				case "up": y -= speed; break;
 				case "down": y += speed;break;
+				}
+			}
+			else if(collisionOn == 3) {
+				switch(direction) {
+				case "up": y -= speed; break;
+				case "down": y+= speed; break;
+				case "left":x -= speed;	break;
+				case "right":x += speed;break;
 				}
 			}
 			
@@ -106,11 +128,17 @@ public class Player extends Entity{
 			}
 		}
 		gp.gravity.CheckGravity(this);
+		
+		if(life <= 0) {
+			gp.gameState = gp.gameOverState;
+			gp.stopMusic();
+			//gp.playMusic(index);
+		}
 	}
 	
 	public int pickUpObject(int i) {
 		if(i != 999) {
-			gp.obj[i] = null;
+			gp.obj[gp.currentMap][i] = null;
 			gp.playSE(1);
 			score++;
 			gp.ui.showMessage("among us");
@@ -118,9 +146,16 @@ public class Player extends Entity{
 		return score;
 	}
 	
+	//TEMPORARY (FOR THE DIALOGUE)
+	//MAYBE CHANGE THIS BECAUSE OF THE ARRAY CHANGE
+	public void interactNPC(int i) {
+		if(i != 999) {
+			if(contactPlayer == true) life--;
+		}
+	}
+	
 	public void draw(Graphics2D g2) {
-		//g2.setColor(Color.white);
-		//g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+
 	
 		BufferedImage image = null;
 		
