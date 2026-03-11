@@ -23,6 +23,7 @@ public class CollisionChecker {
 		
 		int tileNum1, tileNum2;
 		int tempNum1, tempNum2;
+		int tempNum12, tempNum22;
 		
 		switch(entity.direction) {
 		case "up":
@@ -32,7 +33,10 @@ public class CollisionChecker {
 			
 			int entityTopRow2 = entityTopRow + 1;
 			tempNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow2];
-			tempNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow2];	
+			tempNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow2];
+
+			tempNum12 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow-1];
+			tempNum22 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow-1];	
 			
 			if(gp.tileM.tile[tileNum1].collision == 2 || gp.tileM.tile[tileNum2].collision == 2) {
 				entity.collisionOn = 2;
@@ -41,7 +45,13 @@ public class CollisionChecker {
 				
 			}else if ((gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && (gp.tileM.tile[tempNum1].collision == 2 || gp.tileM.tile[tempNum2].collision == 2 )) {
 				entity.collisionOn = 2;
-			}//else if()
+				System.out.println("bonjour");
+
+			}else if ((gp.tileM.tile[tempNum12].collision == 3 || gp.tileM.tile[tempNum22].collision == 3 )) {
+				entity.collisionOn = 3;
+				System.out.println("bonjour bg de la street");
+			}
+			
 			break;
 		case "down":
 			entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;
@@ -57,6 +67,11 @@ public class CollisionChecker {
 			}else if ((gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && (gp.tileM.tile[tempNum1].collision == 2 || gp.tileM.tile[tempNum2].collision == 2 )) {
 				entity.collisionOn = 2;
 			}
+
+			else if ((gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && (gp.tileM.tile[tempNum1].collision == 3 || gp.tileM.tile[tempNum2].collision == 3 )) {
+				entity.collisionOn = 2;
+			}
+
 			break;
 		case "left":
 			entityLeftCol = (entityLeftWorldX - entity.speed)/gp.tileSize;
@@ -79,6 +94,9 @@ public class CollisionChecker {
 		}
 		
 	}
+
+
+	
 	public int checkObject(Entity entity, boolean player) {
 	
 		int index = 999;

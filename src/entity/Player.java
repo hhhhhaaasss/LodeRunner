@@ -1,16 +1,12 @@
 package entity;
 
-import java.awt.Color;
+import Main.GamePanel;
+import Main.KeyHandler;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-//Importing our own Main class Package
-import Main.GamePanel;
-import Main.KeyHandler;
 
 public class Player extends Entity{
 
@@ -75,11 +71,13 @@ public class Player extends Entity{
 	
 	public void update() {
 		
-		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true ||keyH.rightPressed == true) {
+
+		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true ||keyH.rightPressed == true || keyH.ropeUp == true) {
 			if(keyH.upPressed == true) direction = "up";
 			else if(keyH.downPressed == true) direction = "down";
 			else if(keyH.leftPressed == true) direction = "left";
 			else if(keyH.rightPressed == true) direction = "right";
+			else if(keyH.ropeUp == true) direction = "ropeUp";
 
 			//CHECK TILE COLLISION
 			collisionOn = 0;
@@ -109,7 +107,7 @@ public class Player extends Entity{
 			}
 			else if(collisionOn == 3) {
 				switch(direction) {
-				case "up": y -= speed; break;
+				case "ropeUp": y -= speed; break;
 				case "down": y+= speed; break;
 				case "left":x -= speed;	break;
 				case "right":x += speed;break;
@@ -183,6 +181,12 @@ public class Player extends Entity{
 			
 			if(spriteNum == 1) image = right1;
 			if(spriteNum == 2) image = right2;
+			
+			break;
+
+		case "ropeUp":
+			if(spriteNum == 1) image = up1;
+			if(spriteNum == 2) image = up2;
 			
 			break;
 		}

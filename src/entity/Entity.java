@@ -2,11 +2,10 @@ package entity;
 //Super Class for all entities of the game
 //Abstract Class (Blueprint)
 
+import Main.GamePanel;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
-import Main.GamePanel;
 
 public class Entity {
 
@@ -72,6 +71,11 @@ public class Entity {
 			switch(direction) {
 			case "up": y -= speed; break;
 			case "down": y += speed;break;
+			}
+		}
+		else if(collisionOn == 3){
+			switch(direction){
+				case "ropeUp": y -= speed; break;
 			}
 		}
 		
