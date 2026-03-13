@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
 
 	GamePanel gp;
-	public boolean upPressed, downPressed, leftPressed, rightPressed, ropeUp;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, ropePressed;
 	public boolean checkDebugText;
 	public boolean enterPressed = false;
 	
@@ -16,16 +16,7 @@ public class KeyHandler implements KeyListener{
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		int code = e.getKeyCode();
-		
-		if(gp.gameState == gp.playState){
-			if(code == KeyEvent.VK_UP && upPressed ==false){
-				ropeUp = true;
-			}
-			else if((code == KeyEvent.VK_UP || code == KeyEvent.VK_DOWN) && upPressed == true){
-				ropeUp = false;
-			}
-		}
+
 	}
 
 	@Override
@@ -82,6 +73,13 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP){
 			upPressed = true;
 		}
+		if(code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP && gp.player.collisionOn == 3){
+			ropePressed = true;
+		}
+		else if((code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP ||code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN ) && ropePressed == true) {
+			ropePressed = false;
+		}
+		
 		if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
 			downPressed = true;
 		}
@@ -91,6 +89,7 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_D || code == KeyEvent.VK_E || code == KeyEvent.VK_RIGHT){
 			rightPressed = true;
 		}
+		
 		if(code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_P){
 			if(gp.gameState == gp.playState) {
 				gp.gameState = gp.pauseState;

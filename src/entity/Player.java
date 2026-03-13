@@ -72,12 +72,11 @@ public class Player extends Entity{
 	public void update() {
 		
 
-		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true ||keyH.rightPressed == true || keyH.ropeUp == true) {
+		if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true ||keyH.rightPressed == true) {
 			if(keyH.upPressed == true) direction = "up";
 			else if(keyH.downPressed == true) direction = "down";
 			else if(keyH.leftPressed == true) direction = "left";
 			else if(keyH.rightPressed == true) direction = "right";
-			else if(keyH.ropeUp == true) direction = "ropeUp";
 
 			//CHECK TILE COLLISION
 			collisionOn = 0;
@@ -91,6 +90,9 @@ public class Player extends Entity{
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
 			interactNPC(npcIndex);
 			
+			
+			System.out.println("collision: " +collisionOn);
+			System.out.println("ropeUp: " + gp.keyH.ropePressed);
 			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
 			if(collisionOn == 0) {
@@ -106,11 +108,15 @@ public class Player extends Entity{
 				}
 			}
 			else if(collisionOn == 3) {
-				switch(direction) {
-				case "ropeUp": y -= speed; break;
-				case "down": y+= speed; break;
-				case "left":x -= speed;	break;
-				case "right":x += speed;break;
+				if(gp.keyH.ropePressed == true) {
+					switch(direction){
+					case "left":x -= speed;	break;
+					case "right":x += speed;break;
+					case "down": y += speed; break;
+					}
+					if(gp.keyH.ropePressed == false) {
+						collisionOn = 0;
+					}
 				}
 			}
 			

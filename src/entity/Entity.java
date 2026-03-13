@@ -58,8 +58,9 @@ public class Entity {
 	}
 	public void update() {
 		
-		setAction();
+		//setAction();
 		checkCollision();
+		
 		
 		if(collisionOn == 0) {
 			switch(direction) {
@@ -73,11 +74,8 @@ public class Entity {
 			case "down": y += speed;break;
 			}
 		}
-		else if(collisionOn == 3){
-			switch(direction){
-				case "ropeUp": y -= speed; break;
-			}
-		}
+		
+			
 		
 		//Update Walking animation
 		spriteCounter++;

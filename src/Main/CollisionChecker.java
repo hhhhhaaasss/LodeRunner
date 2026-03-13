@@ -23,7 +23,7 @@ public class CollisionChecker {
 		
 		int tileNum1, tileNum2;
 		int tempNum1, tempNum2;
-		int tempNum12, tempNum22;
+		int tempNum3, tempNum4;
 		
 		switch(entity.direction) {
 		case "up":
@@ -31,12 +31,15 @@ public class CollisionChecker {
 			tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
 			tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
 			
+			//For climbing the stairs up when there is no rope above
 			int entityTopRow2 = entityTopRow + 1;
 			tempNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow2];
 			tempNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow2];
 
-			tempNum12 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow-1];
-			tempNum22 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow-1];	
+			//for climbling the rope
+			int entityTopRow3 = entityTopRow -1;
+			tempNum3 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow3];
+			tempNum4 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow3];	
 			
 			if(gp.tileM.tile[tileNum1].collision == 2 || gp.tileM.tile[tileNum2].collision == 2) {
 				entity.collisionOn = 2;
@@ -45,11 +48,10 @@ public class CollisionChecker {
 				
 			}else if ((gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && (gp.tileM.tile[tempNum1].collision == 2 || gp.tileM.tile[tempNum2].collision == 2 )) {
 				entity.collisionOn = 2;
-				System.out.println("bonjour");
 
-			}else if ((gp.tileM.tile[tempNum12].collision == 3 || gp.tileM.tile[tempNum22].collision == 3 )) {
+			}else if ((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 )) {
 				entity.collisionOn = 3;
-				System.out.println("bonjour bg de la street");
+				
 			}
 			
 			break;
@@ -77,18 +79,40 @@ public class CollisionChecker {
 			entityLeftCol = (entityLeftWorldX - entity.speed)/gp.tileSize;
 			tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];
 			tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];
+			
+			entityTopRow3 = entityTopRow -1;
+			tempNum3 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow3];
+			tempNum4 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow3];	
+			
 			if(gp.tileM.tile[tileNum1].collision == 1 || gp.tileM.tile[tileNum2].collision == 1) {
 				entity.collisionOn = 1;
 			}
+			else if((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 ) && (gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && gp.keyH.ropePressed == true) {
+				entity.collisionOn = 3;
+			}
+			
+			
+			
 			
 			break;
 		case "right":
 			entityRightCol = (entityRightWorldX + entity.speed)/gp.tileSize;
 			tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
 			tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
+			
+			entityTopRow3 = entityTopRow -1;
+			tempNum3 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow3];
+			tempNum4 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow3];	
+			
 			if(gp.tileM.tile[tileNum1].collision == 1 || gp.tileM.tile[tileNum2].collision == 1) {
 				entity.collisionOn = 1;
 			}
+			else if((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 ) && (gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0)) {
+				entity.collisionOn = 3;
+			}
+			
+			
+			
 			
 			break;
 		}
