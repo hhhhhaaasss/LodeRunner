@@ -34,7 +34,7 @@ public class Entity {
 	String dialogues[] = new String[20];
 	int dialogueIndex = 0;
 	
-	public boolean onPath = false;
+	public boolean onPath = true;
 	boolean contactPlayer = false;
 	
 	public Entity(GamePanel gp) {
@@ -48,7 +48,7 @@ public class Entity {
 	
 	public void checkCollision() {
 		collisionOn = 0;
-		gp.cChecker.checkTile(this);
+		//gp.cChecker.checkTile(this);
 		gp.gravity.CheckGravity(this);
 		contactPlayer = gp.cChecker.checkPlayer(this);	
 		
@@ -58,25 +58,16 @@ public class Entity {
 	}
 	public void update() {
 		
-		//setAction();
+		setAction();
 		checkCollision();
 		
-		
-		if(collisionOn == 0) {
 			switch(direction) {
 			case "left":x -= speed;	break;
 			case "right":x += speed;break;
-			}
-		}
-		else if(collisionOn == 2) {
-			switch(direction) {
 			case "up": y -= speed; break;
 			case "down": y += speed;break;
 			}
-		}
-		
-			
-		
+
 		//Update Walking animation
 		spriteCounter++;
 		if(spriteCounter > 12) { //Speed for the change
@@ -123,75 +114,6 @@ public class Entity {
 		
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
 	}
-	public void searchPath(int goalCol, int goalRow) {
-		
-		int startCol = (x + solidArea.x/gp.tileSize);
-		int startRow = (y + solidArea.y/gp.tileSize); 
-		
-		gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
-		
-		if(gp.pFinder.search() == true) {
-			
-			
-			//Next WorldX & WorldY
-			int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
-			int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
-			
-			//Entity solid area pos
-			int enLeftX = x + solidArea.x;
-			int enRightX = x + solidArea.x + solidArea.width;
-			int enTopY = y + solidArea.y;
-			int enBottomY = y + solidArea.y + solidArea.height;
-			
-			if(enTopY > nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
-				direction = "up";
-			}
-			else if(enTopY < nextY && enLeftX >= nextX && enRightX < nextX + gp.tileSize) {
-				direction = "down";
-			}
-			else if(enTopY >= nextY && enBottomY < nextY + gp.tileSize) {
-				//left or right
-				if(enLeftX > nextX) {
-					direction = "left";
-				}
-				if(enLeftX < nextX) {
-					direction = "right";
-				}
-			}
-			else if(enTopY > nextY && enLeftX > nextX) {
-				//up or left
-				direction = "up";
-				checkCollision();
-				if(collisionOn == 1) {
-					direction = "left";
-				}
-			}
-			else if(enTopY > nextY && enLeftX < nextX) {
-				//up or right
-				direction = "up";
-				checkCollision();
-				if(collisionOn == 1) {
-					direction = "left";
-				}
-			}
-			else if(enTopY < nextY && enLeftX > nextX) {
-				//down or left
-				direction = "down";
-				checkCollision();
-				if(collisionOn == 1) {
-					direction = "left";
-				}
-			}
-			else if(enTopY < nextY && enLeftX < nextX) {
-				//down or right
-				direction = "down";
-				checkCollision();
-				if(collisionOn == 1) {
-					direction = "right";
-				}
-			}
-			
-			
-		}
-	}
+
 }
+

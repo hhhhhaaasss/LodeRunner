@@ -21,7 +21,7 @@ public class TileManager {
 		
 		getTileImage();
 		loadMap("/maps/test.txt",0);
-		//loadMap("/maps/test.txt",1);
+		loadMap("/maps/grid.txt",1);
 	}
 	
 	public void getTileImage() {
@@ -79,13 +79,22 @@ public class TileManager {
 					row++;
 				}
 			}
+			System.out.println("Map loaded " + filePath);
 			br.close();
 			
 		}catch(Exception e) {
-			System.err.println("Map not loaded");
+			System.err.println("Map not loaded " + filePath);
 		}
 	}
 	
+    public int[][] generateNavGrid(int mapIndex) {
+        int[][] navGrid = new int[gp.maxScreenRow][gp.maxScreenCol];
+        for(int row=0; row<gp.maxScreenRow; row++)
+            for(int col=0; col<gp.maxScreenCol; col++)
+                navGrid[row][col] = (tile[mapTileNum[mapIndex][col][row]].collision==0)?0:1;
+        return navGrid;
+    }
+
 	public void draw(Graphics2D g2) {
 		
 		int col = 0;

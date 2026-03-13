@@ -1,7 +1,7 @@
 package Main;
 
+import ai.PathFinder;
 import entity.Entity;
-//Importing the java awt for the UI
 import entity.Player;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,10 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JPanel;
-
-import ai.PathFinder;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -55,7 +52,10 @@ public class GamePanel extends JPanel implements Runnable{
 	Sounds se = new Sounds();
 	public UI ui = new UI(this);
 	Config config = new Config(this);
-	public PathFinder pFinder = new PathFinder(this);
+
+	int[][] navGrid = tileM.generateNavGrid(1); 
+    public PathFinder pFinder = new PathFinder(navGrid);
+
 	
 	//COLLISION AND GRAVITY
 	public CollisionChecker cChecker = new CollisionChecker(this); 
@@ -171,7 +171,7 @@ public class GamePanel extends JPanel implements Runnable{
 			//Player
 			player.update();
 			//NPC
-			for(int i = 0; i< npc[1].length; i++) {
+			for(int i = 0; i< npc[currentMap].length; i++) {
 				if(npc[currentMap][i] != null) {
 					npc[currentMap][i].update();
 				}
@@ -206,7 +206,7 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 					
 			//NPC
-			for(int i = 0; i < npc[1].length;i++) {
+			for(int i = 0; i < npc[currentMap].length;i++) {
 				if(npc[currentMap][i] != null) {
 					npc[currentMap][i].draw(g2);
 				}

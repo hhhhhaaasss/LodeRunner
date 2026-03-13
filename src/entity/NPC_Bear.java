@@ -1,11 +1,8 @@
 package entity;
 
-import java.io.IOException;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
-
 import Main.GamePanel;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class NPC_Bear  extends Entity{
 	
@@ -51,47 +48,28 @@ public class NPC_Bear  extends Entity{
 		
 	}
 	
-	public void setAction() {
-		
-		if(onPath == true) {
-			
-			int goalCol = (gp.player.x + gp.player.solidArea.x)/gp.tileSize;
-			int goalRow = (gp.player.y + gp.player.solidArea.y)/gp.tileSize;
-			
-			searchPath(goalCol,goalRow);
-		}
-		//Remove this else later
-		else {
-			actionLockCounter ++;
-			
-			if(actionLockCounter == 120) {
-				
-			
-				Random random = new Random();
-				int i = random.nextInt(100)+1;
-			
-				if(i <= 25) {
-				direction = "up";
-				}
-			
-				else if(i > 25 && i <= 50) {
-					direction = "down";
-				}
-			
-				else if(i > 50 && i<= 75) {
-					direction = "left";
-				}
-				else {
-					direction = "right";
-				}
-				
-				actionLockCounter = 0;
-			}
-		}
-		
-	}
+	@Override
+    public void setAction() {
+        if(!onPath) return;
+
+        int startCol = x / gp.tileSize;
+        int startRow = y / gp.tileSize;
+        int goalCol = (gp.player.x + gp.player.solidArea.x) / gp.tileSize;
+        int goalRow = (gp.player.y + gp.player.solidArea.y) / gp.tileSize;
+
+        gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
+        if(gp.pFinder.search()) {
+            int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
+            int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
+            if(y > nextY) direction = "up";
+            else if(y < nextY) direction = "down";
+            else if(x > nextX) direction = "left";
+            else if(x < nextX) direction = "right";
+        }
+    }
 	
 	//TEMPORARY
+	
 	public void speak() {
 		onPath = true;
 	}

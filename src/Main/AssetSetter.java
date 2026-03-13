@@ -35,7 +35,7 @@ public class AssetSetter {
 		int mapNum = 0;
 		
 		gp.npc[0][0] = new NPC_Bear(gp);
-		gp.npc[0][0].x = 22 * gp.tileSize;
-		gp.npc[0][0].y = gp.tileSize;;
+		gp.npc[0][0].x = 4 * gp.tileSize;
+		gp.npc[0][0].y = 6 * gp.tileSize;
 	}
 }
