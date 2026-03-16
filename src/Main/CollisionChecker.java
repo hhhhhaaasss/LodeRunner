@@ -71,7 +71,7 @@ public class CollisionChecker {
 			}
 
 			else if ((gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && (gp.tileM.tile[tempNum1].collision == 3 || gp.tileM.tile[tempNum2].collision == 3 )) {
-				entity.collisionOn = 2;
+				entity.collisionOn = 0;
 			}
 
 			break;
@@ -90,6 +90,9 @@ public class CollisionChecker {
 			else if((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 ) && (gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && gp.keyH.ropePressed == true) {
 				entity.collisionOn = 3;
 			}
+			else if((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 ) && (gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0)) {
+				entity.collisionOn = 4;
+			}
 			
 			
 			
@@ -107,8 +110,11 @@ public class CollisionChecker {
 			if(gp.tileM.tile[tileNum1].collision == 1 || gp.tileM.tile[tileNum2].collision == 1) {
 				entity.collisionOn = 1;
 			}
-			else if((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 ) && (gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0)) {
+			else if((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 ) && (gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && gp.keyH.ropePressed == true) {
 				entity.collisionOn = 3;
+			}
+			else if((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 ) && (gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0)) {
+				entity.collisionOn = 4;
 			}
 			
 			

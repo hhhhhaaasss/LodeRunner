@@ -91,11 +91,10 @@ public class Player extends Entity{
 			interactNPC(npcIndex);
 			
 			
-			System.out.println("collision: " +collisionOn);
-			System.out.println("ropeUp: " + gp.keyH.ropePressed);
+
 			
 			// IF COLLISION IS FALSE, PLAYER CAN MOVE
-			if(collisionOn == 0) {
+			if(collisionOn == 0 || collisionOn == 4) {
 				switch(direction) {
 				case "left":x -= speed;	break;
 				case "right":x += speed;break;

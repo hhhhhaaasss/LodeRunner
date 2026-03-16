@@ -73,7 +73,7 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP){
 			upPressed = true;
 		}
-		if(code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP && gp.player.collisionOn == 3){
+		if(code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP && (gp.player.collisionOn == 3 || gp.player.collisionOn == 4)){
 			ropePressed = true;
 		}
 		else if((code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP ||code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN ) && ropePressed == true) {
