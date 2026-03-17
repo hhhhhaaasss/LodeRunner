@@ -137,6 +137,11 @@ public class Player extends Entity{
 			gp.stopMusic();
 			//gp.playMusic(index);
 		}
+		
+		if(gp.keyH.spacePressed == true) {
+			
+			gp.tileI.breaking(this);
+		}
 	}
 	
 	public int pickUpObject(int i) {

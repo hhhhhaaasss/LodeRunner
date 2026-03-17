@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import ai.PathFinder;
 import object.SuperObject;
+import tile.TileInteractive;
 import tile.TileManager;
 
 
@@ -51,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//SYSTEM
 	public TileManager tileM = new TileManager(this);
+	public TileInteractive tileI = new TileInteractive(this);
 	Sounds music = new Sounds();
 	Sounds se = new Sounds();
 	public UI ui = new UI(this);
@@ -217,6 +219,9 @@ public class GamePanel extends JPanel implements Runnable{
 
 			//UI
 			ui.draw(g2);
+			
+			//Object Break
+			tileI.draw(g2);
 					
 			//DEBUG
 			if(keyH.checkDebugText == true) {
@@ -235,6 +240,8 @@ public class GamePanel extends JPanel implements Runnable{
 				g2.drawString("Draw Time: " +  passed, x,y) ;y+= lineHeight;
 				g2.drawString("Player Collision: " +  player.collisionOn, x,y); y+= lineHeight;
 				g2.drawString("Rope Up: " +  keyH.ropePressed, x,y); y+= lineHeight;
+				
+				
 				
 			}
 		}

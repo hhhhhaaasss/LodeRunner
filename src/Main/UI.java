@@ -166,7 +166,7 @@ public class UI {
 			y += gp.tileSize*3;
 			g2.drawString(text, x, y);
 			
-			text = "?? for breaking blocs";
+			text = "Space for breaking blocs";
 			x = getXforCenteredText(text);
 			y += gp.tileSize*3;
 			g2.drawString(text, x, y);

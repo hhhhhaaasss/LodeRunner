@@ -31,6 +31,8 @@ public class Gravity {
 		tileNum4 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow-1];
 		
 		
+
+		
 		if(((gp.tileM.tile[tileNum1].collision == 0 && gp.tileM.tile[tileNum2].collision == 0) || (gp.tileM.tile[tileNum1].collision == 3 && gp.tileM.tile[tileNum2].collision == 3)) && gp.keyH.ropePressed == false){
 			entity.y += entity.speed;
 		}

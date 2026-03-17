@@ -20,7 +20,7 @@ public class TileManager {
 		mapTileNum = new int[gp.maxMap][gp.maxScreenCol][gp.maxScreenRow];
 		
 		getTileImage();
-		loadMap("/maps/test.txt",0);
+		loadMap("/maps/test2.txt",0);
 		//loadMap("/maps/test.txt",1);
 	}
 	
@@ -42,6 +42,11 @@ public class TileManager {
 			tile[3] = new Tile();
 			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rope_1.png"));
 			tile[3].collision = 3;
+			
+			tile[4] = new Tile();
+			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/bg_1.png"));
+			tile[4].collision = 1;
+			tile[4].isDestructible = true;
 			
 			
 		}catch(IOException e) {

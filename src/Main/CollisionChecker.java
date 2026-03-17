@@ -83,6 +83,7 @@ public class CollisionChecker {
 			entityTopRow3 = entityTopRow -1;
 			tempNum3 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow3];
 			tempNum4 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow3];	
+		
 			
 			if(gp.tileM.tile[tileNum1].collision == 1 || gp.tileM.tile[tileNum2].collision == 1) {
 				entity.collisionOn = 1;

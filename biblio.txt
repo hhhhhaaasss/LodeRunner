@@ -11,8 +11,7 @@ Sound Effects website:
 https://sounds.spriters-resource.com/pc_computer/danganronpatriggerhappyhavoc/asset/414149/
 
 Music:
--Turn up the heat (from Danganronpa THH): 
-https://downloads.khinsider.com/game-soundtracks/album/danganronpa-trigger-happy-havoc-original-soundtrack/2-10%2520Argument%2520%2528Turn%2520Up%2520the%2520Heat%2529.mp3
+https://downloads.khinsider.com/game-soundtracks/album/danganronpa-trigger-happy-havoc-original-soundtrack
 
 A*(Star) Search Algo for ai
 

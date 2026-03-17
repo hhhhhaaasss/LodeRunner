@@ -8,8 +8,6 @@
 
 -Effet de son
 
--Icone de debut
-
 -Mode coop[sur le meme PC]
 
 -Mode Versus
