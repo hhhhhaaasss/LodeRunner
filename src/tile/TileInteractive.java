@@ -1,15 +1,13 @@
 package tile;
 
+import Main.GamePanel;
+import entity.Entity;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
-import Main.GamePanel;
-import entity.Entity;
-
-public class TileInteractive extends Thread{
+public class TileInteractive implements Runnable{
 	
 	GamePanel gp;
 	public Tile tile[];
@@ -30,13 +28,22 @@ public class TileInteractive extends Thread{
 	
 	int target = 0;
 	
+	Tile restoreT;
+
 	boolean destructable = false;
+
+	Thread restore;
 	
+	
+	public void startThread(){
+		restore = new Thread(this);
+		restore.start();
+	}
+
 	public TileInteractive(GamePanel gp){
 
 		this.gp = gp;
 		getTileImage();
-		breakImage = 1;
 	}
 	
 	public void getTileImage() {
@@ -54,51 +61,68 @@ public class TileInteractive extends Thread{
 	
 	}
 	
-	public void breaking(Entity entity) { 
-	    entityLeftWorldX = entity.x + entity.solidArea.x; 
-		entityRightWorldX = entity.x + entity.solidArea.x + entity.solidArea.width; 
-		entityBottomWorldY = entity.y + entity.solidArea.y + entity.solidArea.height; 
-		
-		entityLeftCol = entityLeftWorldX/gp.tileSize; 
-		entityRightCol = entityRightWorldX/gp.tileSize; 
-		entityBottomRow = entityBottomWorldY/gp.tileSize;
-		
-		entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;
-		
-		target = 0;
-		
-		tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow]; 
-		tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];
+	public void breaking(Entity entity) {
 
-		
-		
-		switch(entity.direction) {
-		case "left":
-			tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol+1][entityBottomRow]; 
-			target = entityLeftCol;
-			break;
-		
-		case "right":
-			tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol+1][entityBottomRow]; 
-			target = entityRightCol;
-			break;
-		}
-		if(gp.tileM.tile[tileNum1].isDestructible == true || gp.tileM.tile[tileNum2].isDestructible == true){ 
-			spriteNum++;
-			destructable = true;
-			if(spriteNum > 10 && spriteNum < 20)  breakImage = 1; 
-			if(spriteNum > 20 && spriteNum < 30)  breakImage = 2;  
-			if(spriteNum > 30 && spriteNum < 40)  breakImage = 3;  
-			if(spriteNum > 40 && spriteNum < 50)  breakImage = 4;
+    // Player tile position (center of sprite)
+    int playerCol = (entity.x + gp.tileSize / 2) / gp.tileSize;
+    int playerRow = (entity.y + gp.tileSize / 2) / gp.tileSize;
+
+    int targetCol = playerCol;
+    int targetRow = playerRow;
+
+    // 🔥 DIAGONAL BELOW
+    if(entity.direction.equals("left")) {
+        targetCol = playerCol - 1;
+        targetRow = playerRow + 1;
+    }
+    else if(entity.direction.equals("right")) {
+        targetCol = playerCol + 1;
+        targetRow = playerRow + 1;
+    }
+
+    int tileNum = gp.tileM.mapTileNum[gp.currentMap][targetCol][targetRow];
+
+    if(gp.tileM.tile[tileNum].isDestructible) {
+
+        spriteNum++;
+        destructable = true;
+
+        if(spriteNum > 10 && spriteNum < 20) breakImage = 1;
+        if(spriteNum > 20 && spriteNum < 30) breakImage = 2;
+        if(spriteNum > 30 && spriteNum < 40) breakImage = 3;
+        if(spriteNum > 40 && spriteNum < 50) {
+			try {
+				gp.tileM.tile[tileNum].image = ImageIO.read(getClass().getResourceAsStream("/tiles/bg_1.png"));
+				gp.tileM.tile[tileNum].collision = 0;
+			}catch (IOException e) {
+				e.printStackTrace();
+			}
+			breakImage = 4;
 			
-			} 
-		else {
-			destructable = false;
 		}
-		}
+
+        target = targetCol;
+        entityBottomRow = targetRow;
+
+        System.out.println("Breaking at: " + targetCol + "," + targetRow);
+
+    } 	
+	restoreT = gp.tileM.tile[tileNum];
+	}
 	
-	public void restore() {
-		
+	public synchronized void restore() {
+		spriteNum = 0;
+		breakImage = 0;
+
+		try {
+			
+			restoreT.image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+		restoreT = null;
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -117,8 +141,19 @@ public class TileInteractive extends Thread{
 		g2.drawImage(image, worldX, worldY , gp.tileSize, gp.tileSize, null);
 		}
 		
+	}
+
+	@Override
+	public void run(){
+
+		if(restoreT != null){
+		try {
+			Thread.sleep(100);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		
-		//g2.drawImage(image, mapNumTile[][][], y, gp.tileSize, gp.tileSize,null);
+		restore();
+	}
 	}
 }

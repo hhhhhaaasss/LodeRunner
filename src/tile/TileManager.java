@@ -13,6 +13,8 @@ public class TileManager {
 	public Tile[] tile;
 	public int mapTileNum[][][]; //Using text file as maps
 	
+	
+
 	public TileManager(GamePanel gp) {
 		
 		this.gp = gp;

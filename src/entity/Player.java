@@ -138,10 +138,10 @@ public class Player extends Entity{
 			//gp.playMusic(index);
 		}
 		
-		if(gp.keyH.spacePressed == true) {
-			
+		if(gp.keyH.spacePressed == true) {	
 			gp.tileI.breaking(this);
 		}
+		gp.tileI.startThread();
 	}
 	
 	public int pickUpObject(int i) {
