@@ -46,7 +46,7 @@ public class TileManager {
 			tile[3].collision = 3;
 			
 			tile[4] = new Tile();
-			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/bg_1.png"));
+			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_1.png"));
 			tile[4].collision = 1;
 			tile[4].isDestructible = true;
 			

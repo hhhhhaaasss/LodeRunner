@@ -141,7 +141,6 @@ public class Player extends Entity{
 		if(gp.keyH.spacePressed == true) {	
 			gp.tileI.breaking(this);
 		}
-		gp.tileI.startThread();
 	}
 	
 	public int pickUpObject(int i) {

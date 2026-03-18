@@ -1,12 +1,10 @@
 //A FAIRE:
 
--AI des ennemies
-
--Cassage de bloc
+-AI des ennemies/Game Over
 
 -Changement de niveau
 
--Effet de son
+-UI/Score
 
 -Mode coop[sur le meme PC]
 
@@ -26,6 +24,8 @@
 -Resoudre le bug ou le personnage essaie de sortir de la map et il y a une erreur java error index out of bound
 
 -Resoudre bug ou le personnage est trop lent (c'est quand on met le jeu sur fond d'ecran, c'est par rapport a la variable scale)
+
+-?? Resoudre bug ou le j
 
 
 //PROBLEMES GENERAUX

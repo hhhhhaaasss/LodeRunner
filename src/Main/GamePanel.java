@@ -200,6 +200,9 @@ public class GamePanel extends JPanel implements Runnable{
 		//Tile
 		tileM.draw(g2);
 				
+		//Tile Break
+		tileI.draw(g2);
+		
 		//Object
 		for(int i = 0; i < obj[1].length;i++) {
 				if(obj[currentMap][i] !=null) {
@@ -220,8 +223,7 @@ public class GamePanel extends JPanel implements Runnable{
 			//UI
 			ui.draw(g2);
 			
-			//Object Break
-			tileI.draw(g2);
+	
 					
 			//DEBUG
 			if(keyH.checkDebugText == true) {
@@ -240,7 +242,6 @@ public class GamePanel extends JPanel implements Runnable{
 				g2.drawString("Draw Time: " +  passed, x,y) ;y+= lineHeight;
 				g2.drawString("Player Collision: " +  player.collisionOn, x,y); y+= lineHeight;
 				g2.drawString("Rope Up: " +  keyH.ropePressed, x,y); y+= lineHeight;
-				
 				
 				
 			}
