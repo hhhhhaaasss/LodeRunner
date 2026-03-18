@@ -23,7 +23,7 @@ public class TileManager {
 		
 		getTileImage();
 		loadMap("/maps/test2.txt",0);
-		//loadMap("/maps/test.txt",1);
+		loadMap("/maps/test.txt",1);
 	}
 	
 	public void getTileImage() {
@@ -49,6 +49,10 @@ public class TileManager {
 			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_1.png"));
 			tile[4].collision = 1;
 			tile[4].isDestructible = true;
+			
+			tile[5] = new Tile();
+			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stairs_1.png"));
+			tile[5].collision = 5;
 			
 			
 		}catch(IOException e) {

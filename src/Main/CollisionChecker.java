@@ -52,6 +52,10 @@ public class CollisionChecker {
 			}else if ((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 )) {
 				entity.collisionOn = 3;
 				
+			}else if((gp.tileM.tile[tileNum1].collision == 5 || gp.tileM.tile[tileNum2].collision == 5) && (gp.tileM.tile[tempNum1].collision == 2 || gp.tileM.tile[tempNum2].collision == 2 )) {
+				gp.player.setDefaultPositions();
+				gp.tileM.loadMap("/maps/test.txt",1);
+				
 			}
 			
 			break;

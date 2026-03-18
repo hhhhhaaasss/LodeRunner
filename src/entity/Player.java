@@ -19,6 +19,8 @@ public class Player extends Entity{
 		super(gp);
 		this.keyH = keyH;
 		
+		
+		
 		setDefaultValues();
 		getPlayerImage();
 		
