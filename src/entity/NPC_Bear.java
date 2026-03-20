@@ -1,6 +1,6 @@
 package entity;
-
 import Main.GamePanel;
+import ai.PathFinder.Node;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -48,25 +48,46 @@ public class NPC_Bear  extends Entity{
 		
 	}
 	
-	@Override
-    public void setAction() {
-        if(!onPath) return;
+@Override
+public void setAction() {
+    if (!onPath) return;
 
-        int startCol = x / gp.tileSize;
-        int startRow = y / gp.tileSize;
-        int goalCol = (gp.player.x + gp.player.solidArea.x) / gp.tileSize;
-        int goalRow = (gp.player.y + gp.player.solidArea.y) / gp.tileSize;
+    // 1️⃣ Calculer la position en tile
+    int startCol = x / gp.tileSize;
+    int startRow = y / gp.tileSize;
+    int goalCol = (gp.player.x + gp.player.solidArea.x) / gp.tileSize;
+    int goalRow = (gp.player.y + gp.player.solidArea.y) / gp.tileSize;
 
-        gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
-        if(gp.pFinder.search()) {
-            int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
-            int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
-            if(y > nextY) direction = "up";
-            else if(y < nextY) direction = "down";
-            else if(x > nextX) direction = "left";
-            else if(x < nextX) direction = "right";
+    // 2️⃣ Calculer le path si nécessaire
+    gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
+    if (gp.pFinder.search() && !gp.pFinder.pathList.isEmpty()) {
+
+        // 3️⃣ Prendre le Node suivant
+        Node nextNode = gp.pFinder.pathList.get(0);
+        int nextX = nextNode.col * gp.tileSize;
+        int nextY = nextNode.row * gp.tileSize;
+
+        // 4️⃣ Déplacer l'ennemi vers le Node
+        if (x < nextX) x += speed;
+        else if (x > nextX) x -= speed;
+
+        if (y < nextY) y += speed;
+        else if (y > nextY) y -= speed;
+
+        // 5️⃣ Snap et passer au Node suivant quand atteint
+        if (Math.abs(x - nextX) <= speed && Math.abs(y - nextY) <= speed) {
+            x = nextX;
+            y = nextY;
+            gp.pFinder.pathList.remove(0);
         }
+
+        // 6️⃣ Mettre à jour la direction pour l'animation (optionnel)
+        if (y > nextY) direction = "up";
+        else if (y < nextY) direction = "down";
+        else if (x > nextX) direction = "left";
+        else if (x < nextX) direction = "right";
     }
+}
 	
 	//TEMPORARY
 	
