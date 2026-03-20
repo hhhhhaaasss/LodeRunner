@@ -1,6 +1,6 @@
 package entity;
 import Main.GamePanel;
-import ai.PathFinder.Node;
+import ai.Node;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -37,17 +37,6 @@ public class NPC_Bear  extends Entity{
 		
 	}
 	
-	//TEMPORARY
-	public void setDialogue() {
-		
-		dialogues[0] = "Among us ";
-		dialogues[1] = "Lorem Ipsum ffijdsofjdio\nsfjfids";
-		dialogues[2] = "Tutorial ";
-		dialogues[3] = "SUS ";
-		
-		
-	}
-	
 @Override
 public void setAction() {
     if (!onPath) return;
@@ -68,7 +57,7 @@ public void setAction() {
         int nextY = nextNode.row * gp.tileSize;
 
         // 4️⃣ Déplacer l'ennemi vers le Node
-        if (x < nextX) x += speed;
+        if (x < nextX) x += speed; 
         else if (x > nextX) x -= speed;
 
         if (y < nextY) y += speed;
@@ -86,15 +75,6 @@ public void setAction() {
         else if (y < nextY) direction = "down";
         else if (x > nextX) direction = "left";
         else if (x < nextX) direction = "right";
-    }
-}
-	
-	//TEMPORARY
-	
-	public void speak() {
-		onPath = true;
+    	}
 	}
-	
-	
-	
 }

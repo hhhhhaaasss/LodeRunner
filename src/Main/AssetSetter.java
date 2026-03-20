@@ -37,5 +37,9 @@ public class AssetSetter {
 		gp.npc[0][0] = new NPC_Bear(gp);
 		gp.npc[0][0].x = 4 * gp.tileSize;
 		gp.npc[0][0].y = 6 * gp.tileSize;
+
+		gp.npc[0][1] = new NPC_Bear(gp);
+		gp.npc[0][1].x = 15 * gp.tileSize;
+		gp.npc[0][1].y = 2 * gp.tileSize;
 	}
 }
