@@ -1,5 +1,14 @@
-/tile/
 /Main/
-/entity/
-/maps/
 /ai/
+/ennemy/
+/entity/
+/interactive/
+/maps/
+/module-info.class
+/object/
+/objects/
+/player/
+/sound/
+/tile/
+/tiles/
+/video/

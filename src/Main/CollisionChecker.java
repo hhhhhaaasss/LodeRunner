@@ -55,7 +55,7 @@ public class CollisionChecker {
 			}else if((gp.tileM.tile[tileNum1].collision == 5 || gp.tileM.tile[tileNum2].collision == 5) && (gp.tileM.tile[tempNum1].collision == 2 || gp.tileM.tile[tempNum2].collision == 2 )) {
 				gp.player.setDefaultPositions();
 				gp.tileM.loadMap("/maps/test.txt",1);
-				
+				gp.currentMap = 1;				
 			}
 			
 			break;
