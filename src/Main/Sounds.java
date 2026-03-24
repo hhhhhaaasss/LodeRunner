@@ -20,6 +20,10 @@ public class Sounds {
 		soundURL[0] = getClass().getResource("/sound/turnHeat.wav");
 		soundURL[1] = getClass().getResource("/sound/coins.wav");
 		soundURL[2] = getClass().getResource("/sound/menu.wav");
+		soundURL[3] = getClass().getResource("/sound/arrow.wav");
+		soundURL[4] = getClass().getResource("/sound/transition.wav");
+		soundURL[5] = getClass().getResource("/sound/optionTran.wav");
+		
 		
 	}
 	

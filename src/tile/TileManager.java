@@ -12,18 +12,19 @@ public class TileManager {
 	GamePanel gp;
 	public Tile[] tile;
 	public int mapTileNum[][][]; //Using text file as maps
+	Maps mapLocation;
 	
 	
 
-	public TileManager(GamePanel gp) {
+	public TileManager(GamePanel gp, Maps mapLocation){
 		
 		this.gp = gp;
+		this.mapLocation = mapLocation;
 		tile = new Tile[10];
 		mapTileNum = new int[gp.maxMap][gp.maxScreenCol][gp.maxScreenRow];
 		
 		getTileImage();
-		loadMap("/maps/test2.txt",0);
-		loadMap("/maps/test.txt",1);
+		loadMap(mapLocation.getMap(gp.currentMap), gp.currentMap);
 	}
 	
 	public void getTileImage() {

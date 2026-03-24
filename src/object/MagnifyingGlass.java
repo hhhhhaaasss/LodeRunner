@@ -5,7 +5,7 @@ import javax.imageio.ImageIO;
 
 public class MagnifyingGlass extends SuperObject{
 	public MagnifyingGlass() {
-		name = "Magnifying Glass";
+		name = "MagnifyingGlass";
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/magnifying_glass.png"));
 		}catch(IOException e) {
@@ -15,6 +15,4 @@ public class MagnifyingGlass extends SuperObject{
 		solidArea.y = 5;
 		
 	}
-	
-	
 }

@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import ai.PathFinder;
 import object.SuperObject;
+import tile.Maps;
 import tile.TileInteractive;
 import tile.TileManager;
 
@@ -35,6 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
 	//World Settings
 	public final int maxMap = 10;
 	public int currentMap = 0;
+	public Maps mapLocation = new Maps(this);
 	
 	
 	
@@ -53,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Thread gameThread;
 	
 	//SYSTEM
-	public TileManager tileM = new TileManager(this);
+	public TileManager tileM = new TileManager(this, mapLocation);
 	public TileInteractive tileI = new TileInteractive(this);
 	Sounds music = new Sounds();
 	Sounds se = new Sounds();
@@ -153,7 +155,7 @@ public class GamePanel extends JPanel implements Runnable{
 			
 		//This try catch is here to make sure our character does not disappear on screen and has time to run
 			try {
-				double remainingTime = nextDrawTime - System.nanoTime(); //We need to sleed the thread using the remaining time
+				double remainingTime = nextDrawTime - System.nanoTime(); //We need to sleep the thread using the remaining time
 				remainingTime = remainingTime/1000000000; // converting to MilliSeconds
 				
 				if(remainingTime < 0) { //If it takes more than drawInterval to run the Thread, its to avoid bugs
@@ -233,7 +235,8 @@ public class GamePanel extends JPanel implements Runnable{
 				long drawEnd = System.nanoTime();
 				long passed = drawEnd - drawStart;
 						
-				g2.setColor(Color.red);
+				g2.setFont(getFont().deriveFont(40F));
+				g2.setColor(Color.black);
 				int x = 10;
 				int y = 300;
 				int lineHeight = 40;

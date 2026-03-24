@@ -8,6 +8,8 @@
 
 -Mode coop[sur le meme PC]
 
+-Intro
+
 -Mode Versus
 
 -Score DB

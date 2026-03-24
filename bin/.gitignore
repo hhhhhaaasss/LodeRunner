@@ -1,14 +1,7 @@
 /Main/
-/ai/
-/ennemy/
-/entity/
-/interactive/
-/maps/
-/module-info.class
+/sound/
 /object/
 /objects/
-/player/
-/sound/
+/entity/
 /tile/
-/tiles/
-/video/
+/maps/

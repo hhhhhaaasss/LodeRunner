@@ -31,16 +31,19 @@ public class KeyHandler implements KeyListener{
 					if(gp.ui.commandNum < 0) {
 						gp.ui.commandNum = 4;
 					}
+					gp.playSE(3);
 				}
 				if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN){
 					gp.ui.commandNum++;
 					if(gp.ui.commandNum > 4) {
 						gp.ui.commandNum = 0;
 					}
+					gp.playSE(3);
 				}
 				if(code == KeyEvent.VK_ENTER) {
 					if(gp.ui.commandNum == 0) {
 						gp.ui.titleScreenState = 1;
+						gp.playSE(4);
 						
 					}
 					if(gp.ui.commandNum == 1) {
@@ -51,10 +54,12 @@ public class KeyHandler implements KeyListener{
 					}
 					if(gp.ui.commandNum == 3) {
 						gp.gameState = gp.settingsState;
+						gp.playSE(4);
 					}
 					
 					if(gp.ui.commandNum == 4) {
 						System.exit(0);
+						
 					}
 				}
 			}
@@ -63,6 +68,7 @@ public class KeyHandler implements KeyListener{
 					gp.gameState = gp.playState;
 					gp.ui.titleScreenState = 0;
 					gp.stopMusic();
+					gp.playSE(4);
 					gp.playMusic(0);
 
 			}
@@ -94,6 +100,7 @@ public class KeyHandler implements KeyListener{
 			if(gp.gameState == gp.playState) {
 				gp.gameState = gp.pauseState;
 			}
+			gp.playSE(5);
 		}
 		
 		if(code == KeyEvent.VK_SPACE) {
@@ -135,16 +142,70 @@ public class KeyHandler implements KeyListener{
 }
 	
 	public void settingsState(int code) {
-
+		if(code == KeyEvent.VK_ESCAPE) {
+			gp.gameState = gp.titleState;
+			gp.playSE(4);
+		}
+		if(code == KeyEvent.VK_ENTER && gp.ui.commandNum == 0) {
+			enterPressed = true;
+			gp.playSE(4);
+		}
+		
+		int maxCommandNum = 0;
+		switch(gp.ui.subState) {
+		case 0: maxCommandNum = 2; break;// Change this later
+		case 1: maxCommandNum = 1; break;
+		}
+		
+		if(code == KeyEvent.VK_UP || code == KeyEvent.VK_W || code == KeyEvent.VK_Z) {
+			gp.ui.commandNum--;
+			if(gp.ui.commandNum < 0) {
+				gp.ui.commandNum = maxCommandNum;
+			}
+			gp.playSE(3);
+		}
+		if(code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S) {
+			gp.ui.commandNum++;
+			if(gp.ui.commandNum > maxCommandNum) {
+				gp.ui.commandNum = 0;
+			}
+			gp.playSE(3);
+		}
+		if(code == KeyEvent.VK_A || code == KeyEvent.VK_Q || code == KeyEvent.VK_LEFT) {
+			if(gp.ui.subState == 0) {
+				if(gp.ui.commandNum == 1 && gp.music.volumeScale > 0) {
+					gp.music.volumeScale--;
+					gp.music.checkVolume();
+				}
+				if(gp.ui.commandNum == 2 && gp.se.volumeScale > 0) {
+					gp.se.volumeScale--;
+				}
+			}
+			gp.playSE(3);
+		}
+		if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+			if(gp.ui.subState == 0) {
+				if(gp.ui.commandNum == 1 && gp.music.volumeScale < 5) {
+					gp.music.volumeScale++;
+					gp.music.checkVolume();
+				}
+				if(gp.ui.commandNum == 2 && gp.se.volumeScale < 5) {
+					gp.se.volumeScale++;
+				}
+			}
+			gp.playSE(3);
+		}
 	}
 
 	public void optionsState(int code) {
 		
 		if(code == KeyEvent.VK_ESCAPE ||code == KeyEvent.VK_P) {
 			gp.gameState = gp.playState;
+			gp.playSE(5);
 		}
 		if(code == KeyEvent.VK_ENTER) {
 			enterPressed = true;
+			gp.playSE(5);
 		}
 		int maxCommandNum = 0;
 		switch(gp.ui.subState) {
@@ -157,12 +218,14 @@ public class KeyHandler implements KeyListener{
 			if(gp.ui.commandNum < 0) {
 				gp.ui.commandNum = maxCommandNum;
 			}
+			gp.playSE(3);
 		}
 		if(code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S) {
 			gp.ui.commandNum++;
 			if(gp.ui.commandNum > maxCommandNum) {
 				gp.ui.commandNum = 0;
 			}
+			gp.playSE(3);
 		}
 		if(code == KeyEvent.VK_A || code == KeyEvent.VK_Q || code == KeyEvent.VK_LEFT) {
 			if(gp.ui.subState == 0) {
@@ -174,6 +237,7 @@ public class KeyHandler implements KeyListener{
 					gp.se.volumeScale--;
 				}
 			}
+			gp.playSE(3);
 		}
 		if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
 			if(gp.ui.subState == 0) {
@@ -185,6 +249,7 @@ public class KeyHandler implements KeyListener{
 					gp.se.volumeScale++;
 				}
 			}
+			gp.playSE(3);
 		}
 		
 	}

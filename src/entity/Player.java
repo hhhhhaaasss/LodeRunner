@@ -20,7 +20,6 @@ public class Player extends Entity{
 		this.keyH = keyH;
 		
 		
-		
 		setDefaultValues();
 		getPlayerImage();
 		
@@ -119,6 +118,9 @@ public class Player extends Entity{
 						collisionOn = 0;
 					}
 				}
+			}
+			else if(collisionOn == 5) {
+				gp.currentMap++;
 			}
 			
 			//Update Walking animation

@@ -25,6 +25,9 @@ public class CollisionChecker {
 		int tempNum1, tempNum2;
 		int tempNum3, tempNum4;
 		
+		int entityTopRow2 = 0;
+		int entityTopRow3 = 0;
+		
 		switch(entity.direction) {
 		case "up":
 			entityTopRow = (entityTopWorldY - entity.speed)/gp.tileSize;
@@ -32,32 +35,32 @@ public class CollisionChecker {
 			tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];
 			
 			//For climbing the stairs up when there is no rope above
-			int entityTopRow2 = entityTopRow + 1;
+			entityTopRow2 = entityTopRow + 1;
 			tempNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow2];
 			tempNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow2];
 
 			//for climbling the rope
-			int entityTopRow3 = entityTopRow -1;
-			tempNum3 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow3];
-			tempNum4 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow3];	
+			if(entityTopRow-1 > -1) {
 			
-			if(gp.tileM.tile[tileNum1].collision == 2 || gp.tileM.tile[tileNum2].collision == 2) {
-				entity.collisionOn = 2;
-				
-				
-				
-			}else if ((gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && (gp.tileM.tile[tempNum1].collision == 2 || gp.tileM.tile[tempNum2].collision == 2 )) {
-				entity.collisionOn = 2;
-
-			}else if ((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 )) {
-				entity.collisionOn = 3;
-				
-			}else if((gp.tileM.tile[tileNum1].collision == 5 || gp.tileM.tile[tileNum2].collision == 5) && (gp.tileM.tile[tempNum1].collision == 2 || gp.tileM.tile[tempNum2].collision == 2 )) {
-				gp.player.setDefaultPositions();
-				gp.tileM.loadMap("/maps/test.txt",1);
-				gp.currentMap = 1;				
+				entityTopRow3 = entityTopRow -1;
+				tempNum3 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow3];
+				tempNum4 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow3];	
+					
+				if(gp.tileM.tile[tileNum1].collision == 2 || gp.tileM.tile[tileNum2].collision == 2) {
+					entity.collisionOn = 2;
+										
+				}else if ((gp.tileM.tile[tileNum1].collision == 0 || gp.tileM.tile[tileNum2].collision == 0) && (gp.tileM.tile[tempNum1].collision == 2 || gp.tileM.tile[tempNum2].collision == 2 )) {
+					entity.collisionOn = 2;
+		
+				}else if ((gp.tileM.tile[tempNum3].collision == 3 || gp.tileM.tile[tempNum4].collision == 3 )) {
+					entity.collisionOn = 3;
+						
+				}
 			}
-			
+			else if(entityTopRow-1 <= -1) {
+				entity.collisionOn = 5;
+			}
+			System.out.println(entity.collisionOn);
 			break;
 		case "down":
 			entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;

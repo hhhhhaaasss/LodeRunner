@@ -20,3 +20,14 @@ https://stackoverflow.com/questions/15716473/exception-in-thread-awt-eventqueue-
 
 Fixing setIcon bug
 https://www.answeroverflow.com/m/1354169299752849699
+
+Fonts:
+Aldrich:https://fonts.google.com/specimen/Aldrich?categoryFilters=Feeling:%2FExpressive%2FStiff&preview.script=Latn
+
+Noto Sans: https://fonts.google.com/noto/specimen/Noto+Sans?query=noto+sans
+
+Adding Color in hex:
+https://stackoverflow.com/questions/27176436/how-to-add-hex-font-color-to-a-jlabel
+
+Animating circle in title screen:
+https://stackoverflow.com/questions/25923480/simple-circle-rotation-simulate-motion
