@@ -5,9 +5,10 @@ import object.MagnifyingGlass;
 
 public class AssetSetter {
 	GamePanel gp;
-	
+	public int[] nbObj;
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
+		this.nbObj = new int[gp.maxMap];
 	}
 	
 	public void setObject() {
@@ -17,16 +18,22 @@ public class AssetSetter {
 		//Second [] is Object Num
  		
 		gp.obj[0][0] = new MagnifyingGlass();
-		gp.obj[0][0].worldX = 13 * gp.tileSize;
-		gp.obj[0][0].worldY = 12 * gp.tileSize;
+		gp.obj[0][0].worldX = 14 * gp.tileSize;
+		gp.obj[0][0].worldY = 11 * gp.tileSize;
+		
 		
 		gp.obj[0][1] = new MagnifyingGlass();
-		gp.obj[0][1].worldX = 20 * gp.tileSize;
-		gp.obj[0][1].worldY = 1 * gp.tileSize;
+		gp.obj[0][1].worldX = 13 * gp.tileSize;
+		gp.obj[0][1].worldY = 11 * gp.tileSize;
 
 		gp.obj[0][2] = new MagnifyingGlass();
-		gp.obj[0][2].worldX = 4 * gp.tileSize;
-		gp.obj[0][2].worldY = 1 * gp.tileSize;
+		gp.obj[0][2].worldX = 15 * gp.tileSize;
+		gp.obj[0][2].worldY = 11 * gp.tileSize;
+		nbObj[0] = 3;
+		
+		gp.obj[1][0] = new MagnifyingGlass();
+		gp.obj[1][0].worldX = 13 * gp.tileSize;
+		gp.obj[1][0].worldY = 12 * gp.tileSize;
 
 	}
 	

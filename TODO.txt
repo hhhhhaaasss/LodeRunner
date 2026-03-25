@@ -1,10 +1,10 @@
 //A FAIRE:
 
--AI des ennemies/Game Over
+-AI des ennemies
 
--Changement de niveau
+-Trapping ennemies
 
--UI/Score
+-Ennemy dying in hole
 
 -Mode coop[sur le meme PC]
 
@@ -21,30 +21,16 @@
 -Faire un .exe du programme
 
 
-
 //BUGS
--Resoudre le bug ou le personnage essaie de sortir de la map et il y a une erreur java error index out of bound
 
 -Resoudre bug ou le personnage est trop lent (c'est quand on met le jeu sur fond d'ecran, c'est par rapport a la variable scale)
-
--?? Resoudre bug ou le j
 
 
 //PROBLEMES GENERAUX
 -Changer les index des objets/npc
 
--Changer le String dialogue de la classe Entite, NPC_BEAR et Player (Ecrit "TEMPORARY")
-
-
 
 //AJOUT
-
--Trouve une typo et l'ajouter dans le jeu
-
--Ajouter une fonction ou la fleche du menu clignote
-
--Faire menu Settings
-
 
 
 //REFACTORIZATION
@@ -56,6 +42,7 @@
 
 -Refactoriser classe UI
 
+-Refactoriser la methode LoadMap dans la classe Tile Manager
 
 
 //RAPPORT

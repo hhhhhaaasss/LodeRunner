@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import ai.PathFinder;
 import object.SuperObject;
 import tile.Maps;
+import tile.TileEndLvl;
 import tile.TileInteractive;
 import tile.TileManager;
 
@@ -57,6 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
 	//SYSTEM
 	public TileManager tileM = new TileManager(this, mapLocation);
 	public TileInteractive tileI = new TileInteractive(this);
+	public TileEndLvl tileE = new TileEndLvl(this);
 	Sounds music = new Sounds();
 	Sounds se = new Sounds();
 	public UI ui = new UI(this);
@@ -82,6 +84,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int pauseState = 2;
 	public final int gameOverState = 3;
 	public final int settingsState = 4;
+	public final int transitionLvlState = 5;
 	
 	
 	
@@ -112,11 +115,17 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void retry() {
 		player.setDefaultPositions();
+		aSetter.setObject();
+		aSetter.setNPC();
+	}
+	
+	public void reload() {
+		currentMap = 0;
+		player.setDefaultPositions();
 		player.restoreLife();
 		player.score = 0;
 		aSetter.setObject();
 		aSetter.setNPC();
-		
 	}
 	
 	
@@ -208,6 +217,9 @@ public class GamePanel extends JPanel implements Runnable{
 		// Break
 		tileI.draw(g2);
 		
+		//End LVL
+		tileE.checkEndLvl();
+		
 		//Object
 		for(int i = 0; i < obj[1].length;i++) {
 				if(obj[currentMap][i] !=null) {
@@ -272,9 +284,25 @@ public class GamePanel extends JPanel implements Runnable{
 		music.stop();
 	}
 	
+	public void pauseMusic() {
+		music.pause();
+	}
+	
+	public void resumeMusic() {
+		music.resume();
+	}
+	
 	public void playSE(int i) {
 		se.setFile(i);
 		se.play();
 		
+	}
+	
+	public void sleep(int i) {
+		try {
+			Thread.sleep(i);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

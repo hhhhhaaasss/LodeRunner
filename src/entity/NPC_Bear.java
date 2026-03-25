@@ -40,17 +40,6 @@ public class NPC_Bear  extends Entity{
 		
 	}
 	
-	//TEMPORARY
-	public void setDialogue() {
-		
-		dialogues[0] = "Among us ";
-		dialogues[1] = "Lorem Ipsum ffijdsofjdio\nsfjfids";
-		dialogues[2] = "Tutorial ";
-		dialogues[3] = "SUS ";
-		
-		
-	}
-	
 	public void setAction() {
 		
 		if(onPath == true) {
@@ -89,13 +78,6 @@ public class NPC_Bear  extends Entity{
 			}
 		}
 		
-	}
-	
-	//TEMPORARY
-	public void speak() {
-		onPath = true;
-	}
-	
-	
+	}	
 	
 }

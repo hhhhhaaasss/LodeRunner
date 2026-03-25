@@ -98,6 +98,7 @@ public class TileInteractive implements Runnable{
         if(spriteNum > 30 && spriteNum < 40) breakImage = 3;
         if(spriteNum > 40 && spriteNum < 50) {
 			breakImage = 4;
+			gp.player.score += 50;
 			
 			if(!tileBroken) {
 				brokenCol = targetCol;

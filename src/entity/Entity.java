@@ -15,7 +15,7 @@ public class Entity {
 	
 	//BufferedImage describes an Image with an accessible buffer or image data
 	//We use this to store our image files
-	public BufferedImage up1,up2,down1,down2,left1,left2,right1,right2;
+	public BufferedImage up1,up2,down1,down2,left1,left2,right1,right2, ropeLeft1, ropeLeft2, ropeRight1, ropeRight2;
 	public String direction;
 	
 	//Walking animation
@@ -30,9 +30,6 @@ public class Entity {
 	//Action for the NPC
 	public int actionLockCounter = 0;
 	
-	//TEMPORARY
-	String dialogues[] = new String[20];
-	int dialogueIndex = 0;
 	
 	public boolean onPath = false;
 	boolean contactPlayer = false;
@@ -58,7 +55,7 @@ public class Entity {
 	}
 	public void update() {
 		
-		//setAction();
+		setAction();
 		checkCollision();
 		
 		
@@ -190,8 +187,6 @@ public class Entity {
 					direction = "right";
 				}
 			}
-			
-			
 		}
 	}
 }

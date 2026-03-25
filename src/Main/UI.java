@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,8 +77,7 @@ public class UI {
 		g2.setFont(aldrich);
 		
 		//Setting Anti ALIASING for future font
-	//	g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALISING, RenderingHints.VALUE TEXT_ANTIALIAS ON);
-		
+		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g2.setColor(white);
 		
 		
@@ -103,6 +103,10 @@ public class UI {
 		
 		if(gp.gameState == gp.settingsState) {
 			drawSettingsScreen();
+		}
+		
+		if(gp.gameState == gp.transitionLvlState) {
+			drawLvl();
 		}
 	}
 	
@@ -417,6 +421,7 @@ public class UI {
 			if(gp.keyH.enterPressed == true) {
 				subState = 0;
 				gp.gameState = gp.titleState;
+				gp.currentMap = 0;
 				gp.stopMusic();
 				gp.playMusic(2);
 			}
@@ -609,7 +614,7 @@ public class UI {
 		
 		x += gp.tileSize + 50;
 		y += gp.tileSize - 17;
-		g2.drawString(""+gp.player.life,x,y);
+		g2.drawString(""+gp.aSetter.nbObj[gp.currentMap],x,y);
 		
 	}
 	
@@ -657,5 +662,19 @@ public class UI {
 		
 		return new Point(xPos, yPos);
 		
+	}
+	
+	public void drawLvl() {
+		//Background Color
+		g2.setColor(black);
+		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+	
+	
+		g2.setFont(aldrich.deriveFont(95F));
+		String text = "LEVEL " + (gp.currentMap+1);
+		int x = getXforCenteredText(text);
+		int y = gp.tileSize*9;
+		g2.setColor(white);
+		g2.drawString(text,x,y);
 	}
 }

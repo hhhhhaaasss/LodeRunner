@@ -60,7 +60,6 @@ public class CollisionChecker {
 			else if(entityTopRow-1 <= -1) {
 				entity.collisionOn = 5;
 			}
-			System.out.println(entity.collisionOn);
 			break;
 		case "down":
 			entityBottomRow = (entityBottomWorldY + entity.speed)/gp.tileSize;

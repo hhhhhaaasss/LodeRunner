@@ -53,7 +53,8 @@ public class TileManager {
 			
 			tile[5] = new Tile();
 			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stairs_1.png"));
-			tile[5].collision = 5;
+			tile[5].collision = 2;
+			
 			
 			
 		}catch(IOException e) {

@@ -65,16 +65,19 @@ public class KeyHandler implements KeyListener{
 			}
 			else if(gp.ui.titleScreenState == 1) {
 				if(code == KeyEvent.VK_ENTER) {
-					gp.gameState = gp.playState;
+					gp.gameState = gp.transitionLvlState;
+					enterPressed = false;
 					gp.ui.titleScreenState = 0;
 					gp.stopMusic();
 					gp.playSE(4);
 					gp.playMusic(0);
 
+				}
 			}
 		}
-	}
 		
+		
+		//Play State
 		if(gp.gameState == gp.playState) {
 		if(code == KeyEvent.VK_W || code == KeyEvent.VK_Z || code == KeyEvent.VK_UP){
 			upPressed = true;
@@ -99,6 +102,7 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_P){
 			if(gp.gameState == gp.playState) {
 				gp.gameState = gp.pauseState;
+				gp.pauseMusic();
 			}
 			gp.playSE(5);
 		}
@@ -116,10 +120,9 @@ public class KeyHandler implements KeyListener{
 			}
 		}
 		if(code == KeyEvent.VK_R) {
-			switch(gp.currentMap) {
-			case 0: gp.tileM.loadMap("/maps/test.txt",0); break;
-			//case 1: gp.tileM.loadMap("/maps/test.txt",0); break;
-			}
+		
+			gp.tileM.loadMap(gp.mapLocation.getMap(gp.currentMap), gp.currentMap);
+			gp.player.setDefaultPositions();
 			
 		}
 	}
@@ -137,6 +140,10 @@ public class KeyHandler implements KeyListener{
 		//Settings State
 		else if(gp.gameState == gp.settingsState) {
 			settingsState(code);
+		}
+		
+		else if(gp.gameState == gp.transitionLvlState) {
+			transitionState();
 		}
 		
 }
@@ -199,9 +206,11 @@ public class KeyHandler implements KeyListener{
 
 	public void optionsState(int code) {
 		
+		
 		if(code == KeyEvent.VK_ESCAPE ||code == KeyEvent.VK_P) {
 			gp.gameState = gp.playState;
 			gp.playSE(5);
+			gp.resumeMusic();
 		}
 		if(code == KeyEvent.VK_ENTER) {
 			enterPressed = true;
@@ -270,15 +279,28 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_ENTER) {
 			if(gp.ui.commandNum == 0) {
 				gp.gameState = gp.playState;
-				gp.retry();
+				gp.stopMusic();
 				gp.playMusic(0);
+				
+				if(gp.player.life <= 0) {
+					gp.reload();
+				}
+				else {
+					gp.retry();
+				}
 			}
 			else if(gp.ui.commandNum == 1) {
 				gp.gameState = gp.titleState;
+				gp.stopMusic();
 				gp.playMusic(2);
-				gp.retry();
+				gp.reload();
 			}
-		}
+		}		
+	}
+	//TODO RETURN THE SLEEP
+	public void transitionState() {
+			//gp.sleep(1000);
+			gp.gameState = gp.playState;
 	}
 	
 	@Override

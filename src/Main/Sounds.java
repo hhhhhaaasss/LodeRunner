@@ -14,15 +14,17 @@ public class Sounds {
 	FloatControl fc;
 	int volumeScale = 3;
 	float volume;
+	long clipTime;
 	
 	public Sounds() {
 		
-		soundURL[0] = getClass().getResource("/sound/turnHeat.wav");
+		soundURL[0] = getClass().getResource("/sound/argument.wav");
 		soundURL[1] = getClass().getResource("/sound/coins.wav");
 		soundURL[2] = getClass().getResource("/sound/menu.wav");
 		soundURL[3] = getClass().getResource("/sound/arrow.wav");
 		soundURL[4] = getClass().getResource("/sound/transition.wav");
 		soundURL[5] = getClass().getResource("/sound/optionTran.wav");
+		soundURL[6] = getClass().getResource("/sound/gameOver.wav");
 		
 		
 	}
@@ -59,6 +61,16 @@ public class Sounds {
 		}
 		fc.setValue(volume);
 		
+	}
+	
+	public void pause() {
+		clipTime = clip.getMicrosecondPosition();
+		clip.stop();
+	}
+	
+	public void resume() {
+		clip.setMicrosecondPosition(clipTime);
+		clip.start();
 	}
 	
 }

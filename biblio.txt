@@ -6,11 +6,10 @@ PiSKEL for the pixel art char
 Resolving sound Volume issue:
 https://stackoverflow.com/questions/953598/audio-volume-control-increase-or-decrease-in-java
 
-Sound Effects website:
--Coins (from Danganronpa THH):
+Sound Effects website from Danganronpa THH:
 https://sounds.spriters-resource.com/pc_computer/danganronpatriggerhappyhavoc/asset/414149/
 
-Music:
+Music (Danganronpa OST):
 https://downloads.khinsider.com/game-soundtracks/album/danganronpa-trigger-happy-havoc-original-soundtrack
 
 A*(Star) Search Algo for ai
@@ -31,3 +30,9 @@ https://stackoverflow.com/questions/27176436/how-to-add-hex-font-color-to-a-jlab
 
 Animating circle in title screen:
 https://stackoverflow.com/questions/25923480/simple-circle-rotation-simulate-motion
+
+Pausing Music:
+https://stackoverflow.com/questions/16915241/how-do-i-pause-a-clip-java
+
+Score: 
+https://mocagh.org/broderbund/loderunner-manual.pdf
