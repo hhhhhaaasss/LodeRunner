@@ -6,6 +6,8 @@
 
 -Ennemy dying in hole
 
+-Fix music Volume
+
 -Mode coop[sur le meme PC]
 
 -Intro

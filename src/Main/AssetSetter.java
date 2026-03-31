@@ -31,9 +31,6 @@ public class AssetSetter {
 		gp.obj[0][2].worldY = 11 * gp.tileSize;
 		nbObj[0] = 3;
 		
-		gp.obj[1][0] = new MagnifyingGlass();
-		gp.obj[1][0].worldX = 13 * gp.tileSize;
-		gp.obj[1][0].worldY = 12 * gp.tileSize;
 
 	}
 	
@@ -43,6 +40,8 @@ public class AssetSetter {
 		
 		gp.npc[0][0] = new NPC_Bear(gp);
 		gp.npc[0][0].x = 22 * gp.tileSize;
-		gp.npc[0][0].y = gp.tileSize;;
+		gp.npc[0][0].y = gp.tileSize;
+		
+		
 	}
 }

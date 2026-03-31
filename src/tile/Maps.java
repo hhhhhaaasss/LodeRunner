@@ -14,7 +14,9 @@ public class Maps {
 		//grid = new String[gp.maxMap];
 		mapLocation[0] = "/maps/test2.txt";
 		//grid[0] = "";
-		mapLocation[1] = "/maps/test.txt";
+		mapLocation[2] = "/maps/test.txt";
+		//TODO Change this later
+		mapLocation[1] = "/maps/reveal.txt";
 	}
 	
 	public String getMap(int mapNum) {

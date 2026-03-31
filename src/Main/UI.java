@@ -21,6 +21,7 @@ public class UI {
 	Font noto_Sans, aldrich;
 	BufferedImage MagGlassImage; //TODO CHANGE NAME LATER
 	BufferedImage HealthBarImage;
+	BufferedImage penImage;
 	public boolean messageOn = false;
 	public String message = "";
 	int messageCounter = 0;
@@ -29,8 +30,12 @@ public class UI {
 	int titleScreenState = 0; // 0: the first screen:
 	int settingsState = 0; 
 	int subState = 0;
+	boolean revealSE = false;
 	
 	Color black, red, white, gray;
+	public float fadeAlpha = 0f;
+	public boolean fadingIn = false;
+	public int transitionCounter = 0;
 	
 	float circleAngle = 0;
 	
@@ -64,6 +69,7 @@ public class UI {
 		HealthBar hb = new HealthBar();
 		HealthBarImage = hb.image;
 		
+		penImage = gp.rp.reveal;
 		
 	}
 	
@@ -107,6 +113,10 @@ public class UI {
 		
 		if(gp.gameState == gp.transitionLvlState) {
 			drawLvl();
+		}
+		
+		if(gp.gameState == gp.revealState) {
+			drawReveal();
 		}
 	}
 	
@@ -665,16 +675,112 @@ public class UI {
 	}
 	
 	public void drawLvl() {
-		//Background Color
+
+	    boolean isReveal = gp.currentMap == 1; // only map 1 is reveal
+
+	    // Background
+	    g2.setColor(black);
+	    g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+	    transitionCounter++;
+
+	    // Fading in
+	    if(fadingIn) {
+	        fadeAlpha += 0.015f;
+	        if(fadeAlpha >= 1f) {
+	            fadeAlpha = 1f;
+	            fadingIn = false;
+	        }
+	    }
+
+	    // TEXT
+	    g2.setFont(aldrich.deriveFont(95F));
+	    String text = isReveal ? "REVEAL THE EVIDENCE" : "LEVEL " + (gp.currentMap + 1);
+	    int x = getXforCenteredText(text);
+	    int y = gp.tileSize * 9;
+
+	    int alpha = (int)(fadeAlpha * 255);
+
+	    // Decorative rects for reveal
+	    if(isReveal) {
+	        g2.setColor(new Color(red.getRed(), red.getGreen(), red.getBlue(), alpha));
+	        int recX = x - 120;
+	        int recY = y - 115;
+	        g2.fillRect(recX, recY, gp.screenWidth + 50, 20);
+	        recY += 150;
+	        g2.fillRect(recX, recY, gp.screenWidth + 50, 20);
+	    }
+
+	    // Draw text
+	    g2.setColor(new Color(255, 255, 255, alpha));
+	    g2.drawString(text, x, y);
+
+	    // Play reveal sound only for reveal levels
+	    if(isReveal && revealSE) {
+	    	gp.stopMusic();
+	        gp.playSE(7);
+	        gp.playMusic(8);
+	        revealSE = false;
+	    }
+
+	    // After ~2 seconds → go to next state
+	    int duration = isReveal ? 180 : 120; // reveal levels stay longer
+	    if(transitionCounter > duration) {
+	        if(isReveal) {
+	        	
+	            gp.gameState = gp.revealState;
+	            gp.rp.setDefaultValues();
+	           
+	        } else {
+	            gp.gameState = gp.playState;
+	        }
+
+	        // Reset for next time
+	        transitionCounter = 0;
+	        fadeAlpha = 0f;
+	        fadingIn = false;
+	        revealSE = true; // reset for next transition
+	    }
+	}
+	
+	public void drawReveal() {
+		//SETTING UP IMAGE AND TEXT ON SCREEN
+		int x = gp.tileSize-50;
+		int y = gp.tileSize * 15;
+				
+		//Background color
 		g2.setColor(black);
-		g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
-	
-	
-		g2.setFont(aldrich.deriveFont(95F));
-		String text = "LEVEL " + (gp.currentMap+1);
-		int x = getXforCenteredText(text);
-		int y = gp.tileSize*9;
+		g2.fillRect(x, y, gp.screenWidth+50, gp.screenHeight);
+				
+		x += gp.tileSize*4;
+		y += gp.tileSize-25;
+				
+		//Score Rectangle
 		g2.setColor(white);
-		g2.drawString(text,x,y);
+		g2.setStroke(new BasicStroke(5));
+		g2.drawRect(x, y, 500, 50);
+				
+		g2.setFont(g2.getFont().deriveFont(40F));
+		x += gp.tileSize - 40;
+		y += gp.tileSize - 10;
+
+		//set an image on screen
+				
+		//set text on screen
+		g2.drawString("SCORE: " + gp.player.score,x,y);
+				
+		//Life Rectangle
+		x += gp.tileSize * 11;
+		y -=gp.tileSize -10;
+		g2.setStroke(new BasicStroke(5));
+		g2.drawRect(x, y, 150, 50);
+				
+		x += gp.tileSize - 40;
+		y += gp.tileSize - 43;
+		g2.drawImage(penImage,x, y, gp.tileSize-10, gp.tileSize-10,null);
+				
+		x += gp.tileSize + 50;
+		y += gp.tileSize - 13;
+		g2.drawString(""+gp.player.life,x,y);
 	}
 }

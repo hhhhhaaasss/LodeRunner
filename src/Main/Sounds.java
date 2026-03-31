@@ -25,7 +25,8 @@ public class Sounds {
 		soundURL[4] = getClass().getResource("/sound/transition.wav");
 		soundURL[5] = getClass().getResource("/sound/optionTran.wav");
 		soundURL[6] = getClass().getResource("/sound/gameOver.wav");
-		
+		soundURL[7] = getClass().getResource("/sound/revealEvidence.wav");
+		soundURL[8] = getClass().getResource("/sound/revealState.wav");
 		
 	}
 	

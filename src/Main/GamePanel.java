@@ -3,6 +3,8 @@ package Main;
 import entity.Entity;
 //Importing the java awt for the UI
 import entity.Player;
+import entity.revealPlayer;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -55,12 +57,14 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	Thread gameThread;
 	
+	
 	//SYSTEM
 	public TileManager tileM = new TileManager(this, mapLocation);
 	public TileInteractive tileI = new TileInteractive(this);
 	public TileEndLvl tileE = new TileEndLvl(this);
 	Sounds music = new Sounds();
 	Sounds se = new Sounds();
+	public revealPlayer rp = new revealPlayer(this, keyH);
 	public UI ui = new UI(this);
 	Config config = new Config(this);
 	public PathFinder pFinder = new PathFinder(this);
@@ -85,6 +89,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int gameOverState = 3;
 	public final int settingsState = 4;
 	public final int transitionLvlState = 5;
+	
+	
+	//REVEAL STATE
+	public final int revealState = 6;
 	
 	
 	
@@ -128,6 +136,9 @@ public class GamePanel extends JPanel implements Runnable{
 		aSetter.setNPC();
 	}
 	
+	public boolean isRevealMap(int mapIndex) {
+	    return mapIndex == 1 || mapIndex == 5; // TODO CHANGE THIS :example maps
+	}
 	
 	public void setFullScreen() {
 		
@@ -161,6 +172,7 @@ public class GamePanel extends JPanel implements Runnable{
 			//Draw the screen with updated info
 			drawToTempScreen();// draw everything to the buffered image
 			drawToScreen();// draw the buffered image to the screen
+			//repaint();
 			
 		//This try catch is here to make sure our character does not disappear on screen and has time to run
 			try {
@@ -194,6 +206,9 @@ public class GamePanel extends JPanel implements Runnable{
 				
 			}
 		}
+		else if(gameState == revealState) {
+			rp.update();
+		}
 	}
 	
 	public void drawToTempScreen() {
@@ -208,6 +223,13 @@ public class GamePanel extends JPanel implements Runnable{
 			ui.draw(g2);
 		}
 				
+		else if(gameState == revealState){
+			
+			//Reveal Evidence
+			tileM.draw(g2);
+			rp.draw(g2);
+			
+		}
 		// OTHERS
 		else {
 				
@@ -233,37 +255,35 @@ public class GamePanel extends JPanel implements Runnable{
 					npc[currentMap][i].draw(g2);
 				}
 			}
-					
-			//Player
-			player.draw(g2);
-
-			//UI
-			ui.draw(g2);
 			
 	
+		//Player
+		player.draw(g2);
+
+								
+		//DEBUG
+		if(keyH.checkDebugText == true) {
+			long drawEnd = System.nanoTime();
+			long passed = drawEnd - drawStart;
+						
+			g2.setFont(getFont().deriveFont(40F));
+			g2.setColor(Color.black);
+			int x = 10;
+			int y = 300;
+			int lineHeight = 40;
 					
-			//DEBUG
-			if(keyH.checkDebugText == true) {
-				long drawEnd = System.nanoTime();
-				long passed = drawEnd - drawStart;
-						
-				g2.setFont(getFont().deriveFont(40F));
-				g2.setColor(Color.black);
-				int x = 10;
-				int y = 300;
-				int lineHeight = 40;
-						
-				g2.drawString("WorldX" + player.x, x, y); y+= lineHeight;
-				g2.drawString("WorldY" + player.y, x, y); y+= lineHeight;
-				g2.drawString("Col" + (player.x + player.solidArea.x)/tileSize, x,y); y+= lineHeight;
-				g2.drawString("Row" + (player.y + player.solidArea.y)/tileSize, x,y); y+= lineHeight;
-				g2.drawString("Draw Time: " +  passed, x,y) ;y+= lineHeight;
-				g2.drawString("Player Collision: " +  player.collisionOn, x,y); y+= lineHeight;
-				g2.drawString("Rope Up: " +  keyH.ropePressed, x,y); y+= lineHeight;
-				
+			g2.drawString("WorldX" + player.x, x, y); y+= lineHeight;
+			g2.drawString("WorldY" + player.y, x, y); y+= lineHeight;
+			g2.drawString("Col" + (player.x + player.solidArea.x)/tileSize, x,y); y+= lineHeight;
+			g2.drawString("Row" + (player.y + player.solidArea.y)/tileSize, x,y); y+= lineHeight;
+			g2.drawString("Draw Time: " +  passed, x,y) ;y+= lineHeight;
+			g2.drawString("Player Collision: " +  player.collisionOn, x,y); y+= lineHeight;
+			g2.drawString("Rope Up: " +  keyH.ropePressed, x,y); y+= lineHeight;			
 				
 			}
 		}
+		//UI
+		ui.draw(g2);
 	}
 	
 
@@ -305,4 +325,10 @@ public class GamePanel extends JPanel implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	@Override
+	protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+	    g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+	}
+	
 }

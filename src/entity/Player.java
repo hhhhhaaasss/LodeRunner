@@ -133,12 +133,13 @@ public class Player extends Entity{
 					}
 				}
 			}
-			else if(collisionOn == 5) {
-				gp.currentMap++;
-				score += 1500;
-				gp.gameState = gp.transitionLvlState;
-				gp.tileM.loadMap(gp.mapLocation.getMap(gp.currentMap), gp.currentMap);
-				setDefaultPositions();
+			else if(collisionOn == 5) { 
+			    gp.currentMap++;
+			    score += 1500;
+
+			    gp.tileM.loadMap(gp.mapLocation.getMap(gp.currentMap), gp.currentMap);
+			    setDefaultPositions();
+			    gp.gameState = gp.transitionLvlState;
 			}
 			
 			//Update Walking animation
