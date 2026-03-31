@@ -1,0 +1,332 @@
+package Main;
+
+import ai.PathFinder;
+import entity.Entity;
+import entity.Player;
+import entity.revealPlayer;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
+import javax.swing.JPanel;
+import object.SuperObject;
+import tile.Maps;
+import tile.TileEndLvl;
+import tile.TileInteractive;
+import tile.TileManager;
+
+
+public class GamePanel extends JPanel implements Runnable{
+	
+	//Screen Settings
+	final int originalTitleSize = 16; // 16x16 tile for characters and objects
+	//Scalling the character to fit modern screen
+	final int scale = 3;
+	
+	public final int tileSize = originalTitleSize * scale; // 48x48 title, its public so that Player.java can use it
+	public final int maxScreenCol =28;
+	public final int maxScreenRow = 17;
+	public final int screenWidth = tileSize * maxScreenCol; // 1248 pixels
+	public final int screenHeight = tileSize * maxScreenRow; // 720 pixels
+	
+	//World Settings
+	public final int maxMap = 10;
+	public int currentMap = 0;
+	public Maps mapLocation = new Maps(this);
+	
+	
+	
+	//FullScreen
+	int screenWidth2 = screenWidth;
+	int screenHeight2 = screenHeight;
+	BufferedImage tempScreen;
+	Graphics2D g2;
+	public boolean fullScreenOn = false;
+	
+	int FPS = 60;
+	
+	
+	public KeyHandler keyH = new KeyHandler(this);
+	
+	Thread gameThread;
+	
+	
+	//SYSTEM
+	public TileManager tileM = new TileManager(this, mapLocation);
+	public TileInteractive tileI = new TileInteractive(this);
+	public TileEndLvl tileE = new TileEndLvl(this);
+	Sounds music = new Sounds();
+	Sounds se = new Sounds();
+	public revealPlayer rp = new revealPlayer(this, keyH);
+	public UI ui = new UI(this);
+	Config config = new Config(this);
+
+	int[][] navGrid = tileM.generateNavGrid(3); 
+    public PathFinder pFinder = new PathFinder(navGrid);
+	
+	//COLLISION AND GRAVITY
+	public CollisionChecker cChecker = new CollisionChecker(this); 
+	public AssetSetter aSetter = new AssetSetter(this);
+	public Gravity gravity = new Gravity(this);
+	
+	//ENTITY AND OBJ
+	public Player player = new Player(this, keyH);
+	public SuperObject obj[][] = new SuperObject[maxMap][10]; //prepare 10 slots for objects
+	public Entity npc[][] = new Entity[maxMap][10];
+	
+
+	//GAME STATE
+	public int gameState;
+	public final int introState = -1;
+	public final int titleState = 0;
+	public final int playState = 1;
+	public final int pauseState = 2;
+	public final int gameOverState = 3;
+	public final int settingsState = 4;
+	public final int transitionLvlState = 5;
+	
+	
+	//REVEAL STATE
+	public final int revealState = 6;
+	
+	
+	
+	public GamePanel() {
+		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+		this.setBackground(Color.black);
+		this.setDoubleBuffered(true); //if set to true, all the drawing from this component will be done in an offscreen painting buffer
+		this.addKeyListener(keyH);
+		this.setFocusable(true); // With this, this GamePanel can be "focused" to receive key input
+	}
+
+	
+	public void setupGame() {
+		aSetter.setObject();
+		aSetter.setNPC();
+		playMusic(2);
+		gameState = titleState;
+		
+		//FullScreen settings
+		tempScreen = new BufferedImage(screenWidth,screenHeight,BufferedImage.TYPE_INT_ARGB);
+		g2 = (Graphics2D) tempScreen.getGraphics();//Everything this g2 draw will be recorded here
+		
+		if(fullScreenOn == true) {
+			setFullScreen();
+		}
+		
+	}
+	
+	public void retry() {
+		player.setDefaultPositions();
+		aSetter.setObject();
+		aSetter.setNPC();
+	}
+	
+	public void reload() {
+		currentMap = 0;
+		player.setDefaultPositions();
+		player.restoreLife();
+		player.score = 0;
+		aSetter.setObject();
+		aSetter.setNPC();
+	}
+	
+	public boolean isRevealMap(int mapIndex) {
+	    return mapIndex == 1 || mapIndex == 5; // TODO CHANGE THIS :example maps
+	}
+	
+	public void setFullScreen() {
+		
+		//Get Local Screen Device
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice gd = ge.getDefaultScreenDevice();
+		gd.setFullScreenWindow(Main.window);
+		
+		//Get FullScreen Width and Height
+		screenWidth2 = Main.window.getWidth();
+		screenHeight2 = Main.window.getHeight();
+	}
+	public void startGameThread() {
+		gameThread = new Thread(this);
+		gameThread.start();
+	}
+	
+	@Override
+	public void run() {
+		
+		double drawInterval = 1000000000/FPS; // 0.166 seconds
+		double nextDrawTime = System.nanoTime() + drawInterval;
+		
+		
+		//Game Loop
+		while(gameThread != null) {
+			//long currentTime = System.nanoTime();
+			
+			//Update Info such as character pos
+			update();
+			//Draw the screen with updated info
+			drawToTempScreen();// draw everything to the buffered image
+			drawToScreen();// draw the buffered image to the screen
+			//repaint();
+			
+		//This try catch is here to make sure our character does not disappear on screen and has time to run
+			try {
+				double remainingTime = nextDrawTime - System.nanoTime(); //We need to sleep the thread using the remaining time
+				remainingTime = remainingTime/1000000000; // converting to MilliSeconds
+				
+				if(remainingTime < 0) { //If it takes more than drawInterval to run the Thread, its to avoid bugs
+					remainingTime = 0;
+				}
+				Thread.sleep((long) remainingTime);
+				
+				nextDrawTime += drawInterval;
+				
+				
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void update(){
+		
+		if(gameState == playState) {
+			//Player
+			player.update();
+			//NPC
+			for(int i = 0; i< npc[1].length; i++) {
+				if(npc[currentMap][i] != null) {
+					npc[currentMap][i].update();
+				}
+				
+			}
+		}
+		else if(gameState == revealState) {
+			rp.update();
+		}
+	}
+	
+	public void drawToTempScreen() {
+		//Debug
+		long drawStart = 0;
+		if(keyH.checkDebugText == true) {
+			drawStart = System.nanoTime();		
+			}
+				
+		//TITLE SCREEN
+		if(gameState == titleState) {
+			ui.draw(g2);
+		}
+				
+		else if(gameState == revealState){
+			
+			//Reveal Evidence
+			tileM.draw(g2);
+			rp.draw(g2);
+			
+		}
+		// OTHERS
+		else {
+				
+		//Tile
+		tileM.draw(g2);
+				
+		// Break
+		tileI.draw(g2);
+		
+		//End LVL
+		tileE.checkEndLvl();
+		
+		//Object
+		for(int i = 0; i < obj[1].length;i++) {
+				if(obj[currentMap][i] !=null) {
+					obj[currentMap][i].draw(g2, this);
+				}
+			}
+					
+			//NPC
+			for(int i = 0; i < npc[1].length;i++) {
+				if(npc[currentMap][i] != null) {
+					npc[currentMap][i].draw(g2);
+				}
+			}
+			
+	
+		//Player
+		player.draw(g2);
+
+								
+		//DEBUG
+		if(keyH.checkDebugText == true) {
+			long drawEnd = System.nanoTime();
+			long passed = drawEnd - drawStart;
+						
+			g2.setFont(getFont().deriveFont(40F));
+			g2.setColor(Color.black);
+			int x = 10;
+			int y = 300;
+			int lineHeight = 40;
+					
+			g2.drawString("WorldX" + player.x, x, y); y+= lineHeight;
+			g2.drawString("WorldY" + player.y, x, y); y+= lineHeight;
+			g2.drawString("Col" + (player.x + player.solidArea.x)/tileSize, x,y); y+= lineHeight;
+			g2.drawString("Row" + (player.y + player.solidArea.y)/tileSize, x,y); y+= lineHeight;
+			g2.drawString("Draw Time: " +  passed, x,y) ;y+= lineHeight;
+			g2.drawString("Player Collision: " +  player.collisionOn, x,y); y+= lineHeight;
+			g2.drawString("Rope Up: " +  keyH.ropePressed, x,y); y+= lineHeight;			
+				
+			}
+		}
+		//UI
+		ui.draw(g2);
+	}
+	
+
+	public void drawToScreen() {
+		
+		Graphics g = getGraphics();
+		g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+		g.dispose();
+		}
+	
+	public void playMusic(int i) {
+		music.setFile(i);
+		music.play();
+		music.loop();
+	}
+	
+	public void stopMusic() {
+		music.stop();
+	}
+	
+	public void pauseMusic() {
+		music.pause();
+	}
+	
+	public void resumeMusic() {
+		music.resume();
+	}
+	
+	public void playSE(int i) {
+		se.setFile(i);
+		se.play();
+		
+	}
+	
+	public void sleep(int i) {
+		try {
+			Thread.sleep(i);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	@Override
+	protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+	    g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+	}
+	
+}
