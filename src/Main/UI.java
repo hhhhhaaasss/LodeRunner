@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
@@ -751,11 +752,45 @@ public class UI {
 		//Background color
 		g2.setColor(black);
 		g2.fillRect(x, y, gp.screenWidth+50, gp.screenHeight);
-				
-		x += gp.tileSize*4;
+		
+		//WORDS
+		x += gp.tileSize;
 		y += gp.tileSize-25;
+		
+		String word = gp.rp.getWords(0); // get word
+
+		int boxWidth = 60;
+		int boxHeight = 50;
+		int spacing = 15;
+
+		g2.setFont(g2.getFont().deriveFont(40F));
+		g2.setColor(white);
+		g2.setStroke(new BasicStroke(5));
+
+		for(int i = 0; i < word.length(); i++) {
+
+			// Draw box
+			g2.drawRect(x, y, boxWidth, boxHeight);
+
+			// Centered letter
+			FontMetrics fm = g2.getFontMetrics();
+			char letter = word.charAt(i);
+			String s = String.valueOf(letter).toUpperCase();
+
+			int textX = x + (boxWidth - fm.stringWidth(s)) / 2;
+			int textY = y + ((boxHeight - fm.getHeight()) / 2) + fm.getAscent() + 5;
+
+			g2.drawString(s, textX, textY);
+
+			// Move to next box
+			x += boxWidth + spacing;
+		}
 				
+		
 		//Score Rectangle
+		x += gp.tileSize+20;
+		y -= gp.tileSize -45;
+		
 		g2.setColor(white);
 		g2.setStroke(new BasicStroke(5));
 		g2.drawRect(x, y, 500, 50);

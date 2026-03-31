@@ -15,6 +15,7 @@ import Main.KeyHandler;
 public class revealPlayer extends Entity{
 
 	KeyHandler keyH;
+	String words[] = new String[3];
 	
 	public revealPlayer(GamePanel gp, KeyHandler keyH) {
 		
@@ -22,6 +23,10 @@ public class revealPlayer extends Entity{
 		this.keyH = keyH;
 		setDefaultValues();
 		getRevealPlayerImage();
+		
+		words[0] = "knive";
+		words[1] = "";
+		words[2] = "";
 		
 	}
 	
@@ -39,8 +44,9 @@ public class revealPlayer extends Entity{
 		
 		x = 500;
 		y = 500;
-		speed = 2;
+		speed = 6;
 		direction = "down";
+
 	}
 	
 	public void update() {
@@ -59,6 +65,18 @@ public class revealPlayer extends Entity{
 			case "down": y += speed; break;
 			}
 		}
+	}
+	
+	public String getWords(int i) {
+		return words[i];
+	}
+	
+	public void revealWord() {
+		
+	}
+	
+	public void generateWords() {
+		
 	}
 	
 	@Override
