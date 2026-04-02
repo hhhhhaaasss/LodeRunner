@@ -1,0 +1,53 @@
+//A FAIRE:
+
+-Changer le nom de classe de RevealEvidence
+
+-AI des ennemies
+
+-Trapping ennemies
+
+-Ennemy dying in hole
+
+-Fix music Volume
+
+-Mode coop[sur le meme PC]
+
+-Intro
+
+-Mode Versus
+
+-Score DB
+
+-Serveur
+
+-Lan Coop
+
+-Faire un .exe du programme
+
+
+//BUGS
+
+-Resoudre bug ou le personnage est trop lent (c'est quand on met le jeu sur fond d'ecran, c'est par rapport a la variable scale)
+
+
+//PROBLEMES GENERAUX
+-Changer les index des objets/npc
+
+
+//AJOUT
+
+
+//REFACTORIZATION
+-Refactoriser classe Player et Ennemy(NPC)
+
+-Refactoriser code gravite + collision
+
+-Refactoriser classe GamePanel
+
+-Refactoriser classe UI
+
+-Refactoriser la methode LoadMap dans la classe Tile Manager
+
+
+//RAPPORT
+-Expliquer static dans main

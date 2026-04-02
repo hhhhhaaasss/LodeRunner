@@ -1,0 +1,41 @@
+How to Make a 2d Game in Java Playlist:
+https://www.youtube.com/playlist?list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq
+
+PiSKEL for the pixel art char
+
+Resolving sound Volume issue:
+https://stackoverflow.com/questions/953598/audio-volume-control-increase-or-decrease-in-java
+
+Sound Effects website from Danganronpa THH:
+https://sounds.spriters-resource.com/pc_computer/danganronpatriggerhappyhavoc/asset/414149/
+
+Music (Danganronpa OST):
+https://downloads.khinsider.com/game-soundtracks/album/danganronpa-trigger-happy-havoc-original-soundtrack
+
+A*(Star) Search Algo for ai
+
+Fixing display bug
+https://stackoverflow.com/questions/15716473/exception-in-thread-awt-eventqueue-0-java-awt-illegalcomponentstateexception
+
+Fixing setIcon bug
+https://www.answeroverflow.com/m/1354169299752849699
+
+Fonts:
+Aldrich:https://fonts.google.com/specimen/Aldrich?categoryFilters=Feeling:%2FExpressive%2FStiff&preview.script=Latn
+
+Noto Sans: https://fonts.google.com/noto/specimen/Noto+Sans?query=noto+sans
+
+Adding Color in hex:
+https://stackoverflow.com/questions/27176436/how-to-add-hex-font-color-to-a-jlabel
+
+Animating circle in title screen:
+https://stackoverflow.com/questions/25923480/simple-circle-rotation-simulate-motion
+
+Pausing Music:
+https://stackoverflow.com/questions/16915241/how-do-i-pause-a-clip-java
+
+Score: 
+https://mocagh.org/broderbund/loderunner-manual.pdf
+
+Random Letters:
+https://stackoverflow.com/questions/5202866/in-java-how-do-you-randomly-select-a-letter-a-z
