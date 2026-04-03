@@ -732,7 +732,7 @@ public class UI {
 	            gp.rp.setDefaultValues();
 	           
 	        } else {
-	            gp.gameState = gp.revealState;
+	            gp.gameState = gp.playState;
 	        }
 
 	        // Reset for next time

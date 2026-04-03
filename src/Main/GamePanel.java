@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	//World Settings
 	public final int maxMap = 10;
-	public int currentMap = 1;
+	public int currentMap = 0;
 	public Maps mapLocation = new Maps(this);
 	
 	

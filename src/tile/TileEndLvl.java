@@ -1,10 +1,8 @@
 package tile;
 
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-
 import Main.GamePanel;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 public class TileEndLvl implements Runnable{
 
@@ -25,8 +23,8 @@ public class TileEndLvl implements Runnable{
 	
 	public void getTileImage() {
 		 try {
-	          	closedImage = ImageIO.read(getClass().getResourceAsStream("/tiles/bg_1.png"));
-	          	stairsImage = ImageIO.read(getClass().getResourceAsStream("/tiles/stairs_1.png"));
+	          	closedImage = ImageIO.read(getClass().getResourceAsStream("/tiles/bg_2.png"));
+	          	stairsImage = ImageIO.read(getClass().getResourceAsStream("/tiles/stairs_2.png"));
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }

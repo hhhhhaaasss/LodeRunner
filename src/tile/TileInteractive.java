@@ -55,10 +55,10 @@ public class TileInteractive implements Runnable{
 		
 		try {
 			
-			break1 = ImageIO.read(getClass().getResourceAsStream("/interactive/wall_1_break_1.png"));
-			break2 = ImageIO.read(getClass().getResourceAsStream("/interactive/wall_1_break_2.png"));
-			break3 = ImageIO.read(getClass().getResourceAsStream("/interactive/wall_1_break_3.png"));
-			break4 = ImageIO.read(getClass().getResourceAsStream("/interactive/bg_1.png"));
+			break1 = ImageIO.read(getClass().getResourceAsStream("/interactive/wall_2_break_1.png"));
+			break2 = ImageIO.read(getClass().getResourceAsStream("/interactive/wall_2_break_2.png"));
+			break3 = ImageIO.read(getClass().getResourceAsStream("/interactive/wall_2_break_3.png"));
+			break4 = ImageIO.read(getClass().getResourceAsStream("/interactive/bg_2.png"));
 			
 		}catch(IOException e) {
 			e.printStackTrace();

@@ -32,31 +32,31 @@ public class TileManager {
 		try {
 			
 			tile[0] = new Tile();
-			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/bg_1.png"));
+			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/bg_2.png"));
 			
 			tile[1] = new Tile();
-			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_1.png"));
+			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_2.png"));
 			tile[1].collision = 1;
 			
 			tile[2] = new Tile();
-			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stairs_1.png"));
+			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stairs_2.png"));
 			tile[2].collision = 2;
 			
 			tile[3] = new Tile();
-			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rope_1.png"));
+			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/rope_2.png"));
 			tile[3].collision = 3;
 			
 			tile[4] = new Tile();
-			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_1.png"));
+			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_2.png"));
 			tile[4].collision = 1;
 			tile[4].isDestructible = true;
 			
 			tile[5] = new Tile();
-			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stairs_1.png"));
+			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/stairs_2.png"));
 			tile[5].collision = 2;
 			
 			tile[6] = new Tile();
-			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_1.png"));
+			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall_2.png"));
 			
 			
 			
